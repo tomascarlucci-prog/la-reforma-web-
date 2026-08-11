@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Reforma - Restaurante & Tradición en Lomas del Mirador</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Enlace a tu archivo CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVEGACIÓN -->
+  <header>
+    <nav>
+      <a href="#" class="logo">La Reforma</a>
+      <ul class="nav-links">
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#historia">Nosotros</a></li>
+        <li><a href="#reservas">Reservas</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- --- HERO CON DOBLE FONDO TENUE (CSS PURO) --- -->
+  <div class="hero" id="hero-slideshow">
+    <div class="hero-bg bg-1" style="background-image: url('pisonuevo.jpg');"></div>
+    <div class="hero-bg bg-2" style="background-image: url('sebaluis.jpg');"></div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <span class="badge">Lomas del Mirador</span>
+      <h1>LA REFORMA</h1>
+      <p>Auténtica tradición familiar, pasión por la cocina y el orgullo de nuestro barrio.</p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: MENÚ DIGITAL -->
+  <section id="menu">
+    <h2 class="section-title">Nuestro Menú</h2>
+    <p class="section-subtitle">Especialidades elaboradas con la máxima higiene y dedicación</p>
+
+    <!-- Botones de navegación del menú -->
+<div class="menu-filters">
+      <a href="#todos" class="filter-btn active">Todos</a>
+      <a href="#pastas" class="filter-btn">Pastas & Salsas</a>
+      <a href="#carnes" class="filter-btn">Carnes & Especiales</a>
+      <a href="#postres" class="filter-btn">Postres Clásicos</a>
+      <a href="#pizzas" class="filter-btn">Pizzas & Empanadas</a>
+</div>
+
+<!-- Sección general (Todos o inicio de la carta) -->
+<div id="todos" class="seccion-carta">
+  <!-- Aquí puedes dejar o poner una vista general si lo deseas -->
+</div>
+
+<!-- Sección Pastas -->
+<section id="pastas" class="seccion-carta">
+  <h2>Pastas & Salsas</h2>
+  <!-- Aquí luego cargas tus fotos y platos de pastas -->
+  <div class="item-carta">
+    <!-- <img src="tu-foto.jpg" alt="Foto del Plato"> -->
+    <h3>Sorrentinos de la Nonna</h3>
+    <span>$8.500</span>
+    <p>Rellenos de jamón y mozzarella...</p>
+  </div>
+</section>
+
+<!-- Sección Carnes -->
+<section id="carnes" class="seccion-carta">
+  <h2>Carnes & Especiales</h2>
+  <!-- Aquí luego cargas tus fotos y platos de carnes -->
+  <div class="item-carta">
+    <!-- <img src="tu-foto.jpg" alt="Foto del Plato"> -->
+    <h3>Milanesa "La Reforma"</h3>
+    <span>$11.000</span>
+    <p>Corte de ternera tiernizado...</p>
+  </div>
+</section>
+
+<!-- Sección Postres -->
+<section id="postres" class="seccion-carta">
+  <h2>Postres Clásicos</h2>
+  <!-- Aquí luego cargas tus fotos y postres -->
+  <div class="item-carta">
+    <!-- <img src="tu-foto.jpg" alt="Foto del Postre"> -->
+    <h3>Postre del Día</h3>
+    <span>$0.000</span>
+  </div>
+</section>
+
+<!-- Sección Pizzas & Empanadas -->
+<section id="pizzas" class="seccion-carta">
+  <h2>Pizzas & Empanadas</h2>
+  <!-- Aquí luego cargas tus fotos y variedades -->
+  <div class="item-carta">
+    <!-- <img src="tu-foto.jpg" alt="Foto de la Pizza"> -->
+    <h3>Pizza Muzza Especial</h3>
+    <span>$9.000</span>
+  </div>
+</section>
+
+    <div class="menu-grid" id="menu-grid">
+      <!-- PLATO 1 -->
+      <div class="dish-card" data-categoria="pastas">
+        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
+        <div class="dish-info">
+          <div>
+            <div class="dish-header">
+              <span class="dish-title">Sorrentinos de la Nonna</span>
+              <span class="dish-price">$8.500</span>
+            </div>
+            <p class="dish-desc">Rellenos de jamón y mozzarella artesanal con pomodoro italiano de cocción lenta y albahaca fresca.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATO 2 -->
+      <div class="dish-card" data-categoria="pastas">
+        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
+        <div class="dish-info">
+          <div>
+            <div class="dish-header">
+              <span class="dish-title">Fusilli al Fierrito</span>
+              <span class="dish-price">$8.200</span>
+            </div>
+            <p class="dish-desc">Pasta casera amasada en el día con auténtica salsa boloñesa con carne seleccionada y parmesano estacionado.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATO 3 -->
+      <div class="dish-card" data-categoria="carnes">
+        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
+        <div class="dish-info">
+          <div>
+            <div class="dish-header">
+              <span class="dish-title">Milanesa "La Reforma"</span>
+              <span class="dish-price">$11.000</span>
+            </div>
+            <p class="dish-desc">Corte de ternera tiernizado, gratinado con pomodoro, jamón cocido y abundante mozzarella. Para compartir.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATO 4 -->
+      <div class="dish-card" data-categoria="carnes">
+        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
+        <div class="dish-info">
+          <div>
+            <div class="dish-header">
+              <span class="dish-title">Bife de Chorizo a las Hierbas</span>
+              <span class="dish-price">$13.500</span>
+            </div>
+            <p class="dish-desc">Carne de pastura con manteca de hierbas, acompañado de papas rústicas al romero y ajo.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATO 5 -->
+      <div class="dish-card" data-categoria="postres">
+        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
+        <div class="dish-info">
+          <div>
+            <div class="dish-header">
+              <span class="dish-title">Tiramisú Tradicional</span>
+              <span class="dish-price">$4.500</span>
+            </div>
+            <p class="dish-desc">Vainillas bañadas en café intenso, crema de mascarpone casero y cacao amargo espolvoreado.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLATO 6 -->
+      <div class="dish-card" data-categoria="postres">
+        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
+        <div class="dish-info">
+          <div>
+            <div class="dish-header">
+              <span class="dish-title">Flan Casero Mixto</span>
+              <span class="dish-price">$3.800</span>
+            </div>
+            <p class="dish-desc">Receta de familia, cocinado a baño maría con abundante dulce de leche y crema chantilly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2: SOBRE NOSOTROS -->
+  <section id="historia">
+    <h2 class="section-title">Sobre Nosotros</h2>
+    <p class="section-subtitle">25 años haciendo historia en Lomas del Mirador</p>
+
+    <div class="about-box">
+      <p>
+        En <strong>La Reforma</strong>, cada plato cuenta una historia de raíces, trabajo y amor por la buena mesa. Somos una familia de descendientes italianos que llegó a <strong>Lomas del Mirador hace exactamente 25 años</strong>, con una valija repleta de recetas de nuestros antepasados y el sueño intacto de traer nuestra tradición al barrio que nos abrió las puertas.
+      </p>
+      <p>
+        Desde el primer día nos convertimos en un clásico indiscutido de la zona. Nos especializamos en todo tipo de comida: desde las pastas amasadas a mano hasta las carnes y platos caseros más emblemáticos. Para nosotros, la calidad no se negocia: trabajamos bajo las más estricta rigurosidad e <strong>higiene en cada etapa de preparación</strong>, garantizando alimentos seguros, frescos y con el estándar de una cocina ejemplar.
+      </p>
+      <p>
+        Detrás de cada servicio se encuentra nuestro mayor orgullo: cocineros experimentados y maestros de la cocina con <strong>décadas de trayectoria</strong> en el rubro, quienes defienden día a día el sabor auténtico y el respeto por los ingredientes. Lomas del Mirador es nuestro hogar, y La Reforma es la mesa donde celebramos esa pasión.
+      </p>
+
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <h4>25 Años</h4>
+          <p>De historia y pertenencia en Lomas del Mirador.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>Higiene Ejemplar</h4>
+          <p>Máximos estándares de seguridad y control alimentario.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>Alta Trayectoria</h4>
+          <p>Cocineros de escuela con décadas de oficio artesanal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3 Y 4: RESERVAS Y UBICACIÓN -->
+  <section id="reservas">
+    <div class="contact-grid">
+      
+      <!-- RESERVA WHATSAPP -->
+      <div class="card-section">
+        <h3>Reservá tu Mesa</h3>
+        <p class="reserva-desc">
+          Completá tus datos y te enviaremos la solicitud de reserva directo al WhatsApp del restaurante.
+        </p>
+        
+        <form id="wspForm" onsubmit="enviarWhatsApp(event)">
+          <div class="form-group">
+            <label for="nombre">Nombre y Apellido</label>
+            <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+          </div>
+          <div class="form-group">
+            <label for="personas">Cantidad de Personas</label>
+            <select id="personas" required>
+              <option value="2 personas">2 Personas</option>
+              <option value="3 personas">3 Personas</option>
+              <option value="4 personas">4 Personas</option>
+              <option value="5 personas">5 Personas</option>
+              <option value="6 personas o más">6 Personas o más</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" required>
+          </div>
+          <div class="form-group">
+    <label for="hora">Horario estimado</label>
+    <input type="text" id="hora" placeholder="Ej: 21:30 hs" required>
+</div>
+          <button type="submit" class="btn-wsp">
+            📲 Reservar por WhatsApp
+          </button>
+        </form>
+      </div>
+
+      <!-- UBICACIÓN Y MAPA -->
+      <div class="card-section" id="ubicacion">
+        <h3>Dónde Encontrarnos</h3>
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps?q=Juan+Manuel+de+Rosas+898,+Lomas+del+Mirador,+Buenos+Aires&output=embed" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div class="location-info">
+          <p><strong>📍 Dirección:</strong> Av. Juan Manuel de Rosas 898</p>
+          <p>Lomas del Mirador, Buenos Aires</p>
+          <p class="telefono-wsp"><strong>📞 WhatsApp:</strong> 11-5451-0569</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 LA REFORMA - Tradición y Excelente Cocina en Lomas del Mirador.</p>
+  </footer>
+
+  <!-- Enlace a tu archivo JavaScript -->
+  <script src="main.js"></script>
+
+ <!-- Botones Flotantes con Emojis -->
+<div class="floating-social">
+  <!-- WhatsApp -->
+  <a href="https://wa.me/5491154510569" class="float-btn whatsapp" target="_blank" title="WhatsApp">
+    💬
+  </a>
+  <!-- Instagram -->
+  <a href="https://instagram.com/lareforma_lomasdelmirador" class="float-btn instagram" target="_blank" title="Instagram">
+    📷
+  </a>
+</div>
+</body>
+</html>
