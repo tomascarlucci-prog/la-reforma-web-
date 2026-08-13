@@ -15,586 +15,274 @@
 <body>
 
 <!-- NAVEGACIÓN -->
-<header style="background-color: #ff4d4d; border-bottom: 3px solid #cc0000; position: relative; z-index: 1000;">
-  <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
-    <a href="#" style="color: #ffffff; font-size: 1.5rem; font-weight: bold; text-decoration: none;">LA REFORMA</a>
-    
+<header class="header-principal">
+  <div class="nav-container">
+    <a href="#" class="logo">LA REFORMA</a>
     <!-- Botón hamburguesa -->
-    <button onclick="toggleMenu()" style="background: none; border: none; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 0;">☰</button>
+    <button class="menu-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
   </div>
 
-  <!-- Menú desplegable rojo con letras blancas -->
-  <ul id="menu-desplegable" style="display: none; flex-direction: column; background-color: #ff4d4d; list-style: none; padding: 20px 0; margin: 0; text-align: center; border-top: 2px solid #cc0000; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
-    <li style="margin: 10px 0;"><a href="#menu" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Menú</a></li>
-    <li style="margin: 10px 0;"><a href="#historia" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Nosotros</a></li>
-    <li style="margin: 10px 0;"><a href="#reservas" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Reservas</a></li>
-    <li style="margin: 10px 0;"><a href="#ubicacion" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Ubicación</a></li>
-    <li style="margin: 10px 0;"><a href="#delivery" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Delivery</a></li>
-    <li style="margin: 10px 0;"><a href="#platos" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Platos especiales</a></li>
-    <li style="margin: 10px 0;"><a href="#reseñas" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Reseñas y opiniones</a></li>
+  <!-- Menú de navegación -->
+  <ul class="nav-links">
+    <li><a href="#menu" onclick="toggleMenu()">Menú</a></li>
+    <li><a href="#historia" onclick="toggleMenu()">Nosotros</a></li>
+    <li><a href="#reservas" onclick="toggleMenu()">Reservas</a></li>
+    <li><a href="#ubicacion" onclick="toggleMenu()">Ubicación</a></li>
+    <li><a href="#delivery" onclick="toggleMenu()">Delivery</a></li>
+    <li><a href="#platos" onclick="toggleMenu()">Platos especiales</a></li>
+    <li><a href="#reseñas" onclick="toggleMenu()">Reseñas y opiniones</a></li>
   </ul>
 </header>
 
-  <!-- --- HERO CON DOBLE FONDO TENUE (CSS PURO) --- -->
-  <div class="hero" id="hero-slideshow">
-    <div class="hero-bg bg-1" style="background-image: url('pisonuevo.jpg');"></div>
-    <div class="hero-bg bg-2" style="background-image: url('sebaluis.jpg');"></div>
+<!-- HERO CON DOBLE FONDO TENUE -->
+<div class="hero" id="hero-slideshow">
+  <div class="hero-bg bg-1" style="background-image: url('pisonuevo.jpg');"></div>
+  <div class="hero-bg bg-2" style="background-image: url('sebaluis.jpg');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="badge">Lomas del Mirador</span>
+    <h1>LA REFORMA</h1>
+    <p>Auténtica tradición familiar, pasión por la cocina y el orgullo de nuestro barrio.</p>
+  </div>
+</div>
 
-    <div class="hero-overlay"></div>
+<!-- SECCIÓN 1: MENÚ DIGITAL -->
+<section id="menu">
+  <h2 class="section-title">Nuestro Menú</h2>
+  <p class="section-subtitle">Especialidades elaboradas con la máxima higiene y dedicación</p>
 
-    <div class="hero-content">
-      <span class="badge">Lomas del Mirador</span>
-      <h1>LA REFORMA</h1>
-      <p>Auténtica tradición familiar, pasión por la cocina y el orgullo de nuestro barrio.</p>
-    </div>
+  <!-- BOTONES DE NAVEGACIÓN DEL MENÚ -->
+  <div class="menu-filters">
+    <button class="filter-btn active" onclick="mostrarSeccion('cafeteria', this)">Cafetería / Sándwiches</button>
+    <button class="filter-btn" onclick="mostrarSeccion('entradas', this)">Nuestras Entradas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('parrilla', this)">Parrilla (Por Porción)</button>
+    <button class="filter-btn" onclick="mostrarSeccion('pastas', this)">Pastas / Salsas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('minutas', this)">Nuestras Minutas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('ensaladas', this)">Nuestras Ensaladas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('acompanar', this)">Para Acompañar</button>
+    <button class="filter-btn" onclick="mostrarSeccion('pizzas', this)">Pizzas / Empanadas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('postres', this)">Postres / Helados</button>
+    <button class="filter-btn" onclick="mostrarSeccion('sin-alcohol', this)">Bebidas Sin Alcohol</button>
+    <button class="filter-btn" onclick="mostrarSeccion('licuados', this)">Licuados y Jugos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('cervezas', this)">Cervezas / Porrón</button>
+    <button class="filter-btn" onclick="mostrarSeccion('aperitivos', this)">Aperitivos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('vinos-blancos', this)">Vinos Blancos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('espumantes', this)">Espumantes y Rosados</button>
+    <button class="filter-btn" onclick="mostrarSeccion('vinos-tintos', this)">Vinos Tintos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('spirits', this)">Licores y Spirits</button>
+    <button class="filter-btn" onclick="mostrarSeccion('whiskies', this)">Whiskies</button>
   </div>
 
-  <!-- SECCIÓN 1: MENÚ DIGITAL -->
-  <section id="menu">
-    <h2 class="section-title">Nuestro Menú</h2>
-    <p class="section-subtitle">Especialidades elaboradas con la máxima higiene y dedicación</p>
+  <!-- CONTENEDOR DE LAS SECCIONES DE LA CARTA -->
+  <div class="menu-container-sections">
+    <section id="cafeteria" class="seccion-carta activa">
+      <h2>Cafetería & Sándwiches</h2>
+      <div class="item-carta"><h3></h3><span></span><p></p></div>
+    </section>
+    <section id="entradas" class="seccion-carta"><h2>Nuestras Entradas</h2></section>
+    <section id="parrilla" class="seccion-carta"><h2>Nuestra Parrilla (Por Porción)</h2></section>
+    <section id="pastas" class="seccion-carta"><h2>Nuestras Pastas / Salsas</h2></section>
+    <section id="minutas" class="seccion-carta"><h2>Nuestras Minutas</h2></section>
+    <section id="ensaladas" class="seccion-carta"><h2>Nuestras Ensaladas</h2></section>
+    <section id="acompanar" class="seccion-carta"><h2>Para Acompañar</h2></section>
+    <section id="pizzas" class="seccion-carta"><h2>Nuestras Pizzas / Empanadas</h2></section>
+    <section id="postres" class="seccion-carta"><h2>Nuestros Postres / Postres Helados</h2></section>
+    <section id="sin-alcohol" class="seccion-carta"><h2>Bebidas Sin Alcohol</h2></section>
+    <section id="licuados" class="seccion-carta"><h2>Licuados y Jugos</h2></section>
+    <section id="cervezas" class="seccion-carta"><h2>Cervezas / Cerveza Porrón</h2></section>
+    <section id="aperitivos" class="seccion-carta"><h2>Aperitivos</h2></section>
+    <section id="vinos-blancos" class="seccion-carta"><h2>Vinos Blancos</h2></section>
+    <section id="espumantes" class="seccion-carta"><h2>Espumantes y Rosados</h2></section>
+    <section id="vinos-tintos" class="seccion-carta"><h2>Vinos Tintos</h2></section>
+    <section id="spirits" class="seccion-carta"><h2>Licores y Spirits</h2></section>
+    <section id="whiskies" class="seccion-carta"><h2>Whiskies</h2></section>
+  </div>
 
-    <!-- BOTONES DE NAVEGACIÓN DEL MENÚ -->
-<div class="menu-filters">
-  <button class="filter-btn active" onclick="mostrarSeccion('cafeteria', this)">Cafetería / Sándwiches</button>
-  <button class="filter-btn" onclick="mostrarSeccion('entradas', this)">Nuestras Entradas</button>
-  <button class="filter-btn" onclick="mostrarSeccion('parrilla', this)">Parrilla (Por Porción)</button>
-  <button class="filter-btn" onclick="mostrarSeccion('pastas', this)">Pastas / Salsas</button>
-  <button class="filter-btn" onclick="mostrarSeccion('minutas', this)">Nuestras Minutas</button>
-  <button class="filter-btn" onclick="mostrarSeccion('ensaladas', this)">Nuestras Ensaladas</button>
-  <button class="filter-btn" onclick="mostrarSeccion('acompanar', this)">Para Acompañar</button>
-  <button class="filter-btn" onclick="mostrarSeccion('pizzas', this)">Pizzas / Empanadas</button>
-  <button class="filter-btn" onclick="mostrarSeccion('postres', this)">Postres / Helados</button>
-  <button class="filter-btn" onclick="mostrarSeccion('sin-alcohol', this)">Bebidas Sin Alcohol</button>
-  <button class="filter-btn" onclick="mostrarSeccion('licuados', this)">Licuados y Jugos</button>
-  <button class="filter-btn" onclick="mostrarSeccion('cervezas', this)">Cervezas / Porrón</button>
-  <button class="filter-btn" onclick="mostrarSeccion('aperitivos', this)">Aperitivos</button>
-  <button class="filter-btn" onclick="mostrarSeccion('vinos-blancos', this)">Vinos Blancos</button>
-  <button class="filter-btn" onclick="mostrarSeccion('espumantes', this)">Espumantes y Rosados</button>
-  <button class="filter-btn" onclick="mostrarSeccion('vinos-tintos', this)">Vinos Tintos</button>
-  <button class="filter-btn" onclick="mostrarSeccion('spirits', this)">Licores y Spirits</button>
-  <button class="filter-btn" onclick="mostrarSeccion('whiskies', this)">Whiskies</button>
-</div>
-
-<!-- CONTENEDOR DE LAS SECCIONES DE LA CARTA -->
-<div class="menu-container-sections">
-
-  <!-- 1. Cafetería / Sándwiches -->
-  <section id="cafeteria" class="seccion-carta activa">
-    <h2>Cafetería & Sándwiches</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 2. Entradas -->
-  <section id="entradas" class="seccion-carta">
-    <h2>Nuestras Entradas</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 3. Parrilla -->
-  <section id="parrilla" class="seccion-carta">
-    <h2>Nuestra Parrilla (Por Porción)</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 4. Pastas -->
-  <section id="pastas" class="seccion-carta">
-    <h2>Nuestras Pastas / Salsas</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 5. Minutas -->
-  <section id="minutas" class="seccion-carta">
-    <h2>Nuestras Minutas</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 6. Ensaladas -->
-  <section id="ensaladas" class="seccion-carta">
-    <h2>Nuestras Ensaladas</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 7. Para Acompañar -->
-  <section id="acompanar" class="seccion-carta">
-    <h2>Para Acompañar</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 8. Pizzas / Empanadas -->
-  <section id="pizzas" class="seccion-carta">
-    <h2>Nuestras Pizzas / Empanadas</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 9. Postres -->
-  <section id="postres" class="seccion-carta">
-    <h2>Nuestros Postres / Postres Helados</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 10. Bebidas sin alcohol -->
-  <section id="sin-alcohol" class="seccion-carta">
-    <h2>Bebidas Sin Alcohol</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 11. Licuados y jugos -->
-  <section id="licuados" class="seccion-carta">
-    <h2>Licuados y Jugos</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 12. Cervezas -->
-  <section id="cervezas" class="seccion-carta">
-    <h2>Cervezas / Cerveza Porrón</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 13. Aperitivos -->
-  <section id="aperitivos" class="seccion-carta">
-    <h2>Aperitivos</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 14. Vinos blancos -->
-  <section id="vinos-blancos" class="seccion-carta">
-    <h2>Vinos Blancos</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 15. Espumantes y rosados -->
-  <section id="espumantes" class="seccion-carta">
-    <h2>Espumantes y Rosados</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 16. Vinos tintos -->
-  <section id="vinos-tintos" class="seccion-carta">
-    <h2>Vinos Tintos</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 17. Spirits -->
-  <section id="spirits" class="seccion-carta">
-    <h2>Licores y Spirits</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-  <!-- 18. Whiskies -->
-  <section id="whiskies" class="seccion-carta">
-    <h2>Whiskies</h2>
-    <div class="item-carta">
-      <h3></h3><span></span><p></p>
-    </div>
-  </section>
-
-</div>
-
-    <div class="menu-grid" id="menu-grid">
-      <!-- PLATO 1 -->
-      <div class="dish-card" data-categoria="pastas">
-        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
-        <div class="dish-info">
-          <div>
-            <div class="dish-header">
-              <span class="dish-title">Sorrentinos de la Nonna</span>
-              <span class="dish-price">$8.500</span>
-            </div>
-            <p class="dish-desc">Rellenos de jamón y mozzarella artesanal con pomodoro italiano de cocción lenta y albahaca fresca.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PLATO 2 -->
-      <div class="dish-card" data-categoria="pastas">
-        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
-        <div class="dish-info">
-          <div>
-            <div class="dish-header">
-              <span class="dish-title">Fusilli al Fierrito</span>
-              <span class="dish-price">$8.200</span>
-            </div>
-            <p class="dish-desc">Pasta casera amasada en el día con auténtica salsa boloñesa con carne seleccionada y parmesano estacionado.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PLATO 3 -->
-      <div class="dish-card" data-categoria="carnes">
-        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
-        <div class="dish-info">
-          <div>
-            <div class="dish-header">
-              <span class="dish-title">Milanesa "La Reforma"</span>
-              <span class="dish-price">$11.000</span>
-            </div>
-            <p class="dish-desc">Corte de ternera tiernizado, gratinado con pomodoro, jamón cocido y abundante mozzarella. Para compartir.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PLATO 4 -->
-      <div class="dish-card" data-categoria="carnes">
-        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
-        <div class="dish-info">
-          <div>
-            <div class="dish-header">
-              <span class="dish-title">Bife de Chorizo a las Hierbas</span>
-              <span class="dish-price">$13.500</span>
-            </div>
-            <p class="dish-desc">Carne de pastura con manteca de hierbas, acompañado de papas rústicas al romero y ajo.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PLATO 5 -->
-      <div class="dish-card" data-categoria="postres">
-        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
-        <div class="dish-info">
-          <div>
-            <div class="dish-header">
-              <span class="dish-title">Tiramisú Tradicional</span>
-              <span class="dish-price">$4.500</span>
-            </div>
-            <p class="dish-desc">Vainillas bañadas en café intenso, crema de mascarpone casero y cacao amargo espolvoreado.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PLATO 6 -->
-      <div class="dish-card" data-categoria="postres">
-        <div class="dish-img-placeholder">📸 Foto del Plato (Próximamente)</div>
-        <div class="dish-info">
-          <div>
-            <div class="dish-header">
-              <span class="dish-title">Flan Casero Mixto</span>
-              <span class="dish-price">$3.800</span>
-            </div>
-            <p class="dish-desc">Receta de familia, cocinado a baño maría con abundante dulce de leche y crema chantilly.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
- <!-- SECCIÓN DELIVERY CON VIDEO EN CUADRO Y SONIDO -->
+  
+<!-- SECCIÓN DELIVERY -->
 <section id="delivery" class="seccion-delivery-cuadro">
   <div class="container delivery-flex">
-    
-    <!-- Columna del texto -->
     <div class="delivery-info">
       <h2>🛵 Delivery Propio</h2>
       <p>Pedí nuestras especialidades y te las llevamos a la puerta de tu casa, calentitas y al instante.</p>
-      
       <div class="delivery-datos">
         <p><strong>📍 Zonas:</strong> Lomas del Mirador.</p>
         <p><strong>⏰ Horarios:</strong> lunes a sabados: 12 a 15 hs / 20 a 23:00 hs</p>
       </div>
-
       <a href="https://wa.me/5491154510569?text=Hola!%20Quiero%20pedir%20delivery" target="_blank" class="btn-whatsapp">Pedir por WhatsApp</a>
     </div>
-
-    <!-- Columna del video con controles y sonido -->
     <div class="delivery-video-box">
       <video controls playsinline>
         <source src="deliveryvideo.mp4" type="video/mp4">
         Tu navegador no soporta videos.
       </video>
     </div>
-
   </div>
 </section>
+
 <!-- SECCIÓN PLATOS ESPECIALES -->
 <section id="platos" class="seccion-platos">
   <div class="container">
     <h2>🌟 Platos Especiales</h2>
     <p>Lo mejor de nuestra cocina, seleccionado por nuestro chef.</p>
-
     <div class="platos-grid">
-      <!-- Plato 1 -->
       <div class="plato-card">
-        <img src="vacioalhorno.jpg" alt="Plato especial 1">
-        <h3>Vacio al horno con papas"</h3>
-        <p>.</p>
-        <span class="precio"></span>
+        <img src="vacioalhorno.jpg" alt="Vacio al horno con papas">
+        <h3>Vacio al horno con papas</h3>
+        <p>Especialidad de la casa.</p>
       </div>
-
-      <!-- Plato 2 -->
       <div class="plato-card">
-        <img src="pecetoalamostaza.jpg" alt="Plato especial 2">
+        <img src="pecetoalamostaza.jpg" alt="Peceto a la mostaza">
         <h3>Peceto a la mostaza</h3>
-        <p></p>
-        <span class="precio"></span>
+        <p>Sabor inigualable.</p>
       </div>
-
-      <!-- Plato 3 -->
       <div class="plato-card">
-        <img src="arrozconcalamares.jpg" alt="Plato especial 3">
+        <img src="arrozconcalamares.jpg" alt="Arroz con calamares">
         <h3>Arroz con calamares</h3>
-        <p></p>
-        <span class="precio"></span>
+        <p>Directo del mar a tu mesa.</p>
       </div>
-
-      <!-- Plato 4 -->
       <div class="plato-card">
-        <img src="carremechadoconbatata.jpg" alt="Plato especial 4">
-        <h3>carre con batatas</h3>
-        <p></p>
-        <span class="precio"></span>
+        <img src="carremechadoconbatata.jpg" alt="Carre con batatas">
+        <h3>Carre con batatas</h3>
+        <p>Un clásico imperdible.</p>
       </div>
-
-      <!-- Plato 5 -->
       <div class="plato-card">
-        <img src="milanesacompleta.jpg" alt="Plato especial 5">
+        <img src="milanesacompleta.jpg" alt="Milanesa Completa">
         <h3>Milanesa Completa</h3>
-        <p></p>
-        <span class="precio"></span>
+        <p>Abundante y sabrosa.</p>
       </div>
-
-      <!-- Plato 6 -->
       <div class="plato-card">
-        <img src="calzonnapo.jpg" alt="Plato especial 6">
+        <img src="calzonnapo.jpg" alt="Calzóne Napolitano">
         <h3>Calzóne Napolitano</h3>
-        <p></p>
-        <span class="precio"></span>
+        <p>Tradición italiana.</p>
       </div>
-
-      <!-- Plato 7 -->
       <div class="plato-card">
-        <img src="fugazetarellena.jpg" alt="Plato especial 7">
+        <img src="fugazetarellena.jpg" alt="Fugazzeta rellena">
         <h3>Fugazzeta rellena</h3>
-        <p></p>
-        <span class="precio"></span>
+        <p>Doble masa, extra queso.</p>
       </div>
-
-      <!-- Plato 8 -->
       <div class="plato-card">
-        <img src="sorrentinosconrosa.jpg" alt="Plato especial 8">
-        <h3>Sorrentinos con rosa</h3>
-        <p></p>
-        <span class="precio"></span>
+        <img src="sorrentinosconrosa.jpg" alt="Sorrentinos con rosa">
+        <h3>Sorrentinos salsa rosa</h3>
+        <p>Pasta casera del día.</p>
       </div>
-
-      <!-- Plato 9 -->
       <div class="plato-card">
-        <img src="colitaconpapas.jpg" alt="Plato especial 9">
+        <img src="colitaconpapas.jpg" alt="Colita con Papas">
         <h3>Colita con Papas</h3>
-        <p></p>
-        <span class="precio"></span>
+        <p>Tierna y jugosa.</p>
       </div>
     </div>
   </div>
 </section>
 
-  <!-- SECCIÓN 2: SOBRE NOSOTROS -->
-  <section id="historia">
-    <h2 class="section-title">Sobre Nosotros</h2>
-    <p class="section-subtitle">25 años haciendo historia en Lomas del Mirador</p>
-
-    <div class="about-box">
-      <p>
-        En <strong>La Reforma</strong>, cada plato cuenta una historia de raíces, trabajo y amor por la buena mesa. Somos una familia de descendientes italianos que llegó a <strong>Lomas del Mirador hace exactamente 25 años</strong>, con una valija repleta de recetas de nuestros antepasados y el sueño intacto de traer nuestra tradición al barrio que nos abrió las puertas.
-      </p>
-      <p>
-        Desde el primer día nos convertimos en un clásico indiscutido de la zona. Nos especializamos en todo tipo de comida: desde las pastas amasadas a mano hasta las carnes y platos caseros más emblemáticos. Para nosotros, la calidad no se negocia: trabajamos bajo las más estricta rigurosidad e <strong>higiene en cada etapa de preparación</strong>, garantizando alimentos seguros, frescos y con el estándar de una cocina ejemplar.
-      </p>
-      <p>
-        Detrás de cada servicio se encuentra nuestro mayor orgullo: cocineros experimentados y maestros de la cocina con <strong>décadas de trayectoria</strong> en el rubro, quienes defienden día a día el sabor auténtico y el respeto por los ingredientes. Lomas del Mirador es nuestro hogar, y La Reforma es la mesa donde celebramos esa pasión.
-      </p>
-
-      <div class="about-highlights">
-        <div class="highlight-card">
-          <h4>25 Años</h4>
-          <p>De historia y pertenencia en Lomas del Mirador.</p>
-        </div>
-        <div class="highlight-card">
-          <h4>Higiene Ejemplar</h4>
-          <p>Máximos estándares de seguridad y control alimentario.</p>
-        </div>
-        <div class="highlight-card">
-          <h4>Alta Trayectoria</h4>
-          <p>Cocineros de escuela con décadas de oficio artesanal.</p>
-        </div>
-      </div>
+<!-- SECCIÓN 2: SOBRE NOSOTROS -->
+<section id="historia">
+  <h2 class="section-title">Sobre Nosotros</h2>
+  <p class="section-subtitle">25 años haciendo historia en Lomas del Mirador</p>
+  <div class="about-box">
+    <p>En <strong>La Reforma</strong>, cada plato cuenta una historia de raíces, trabajo y amor por la buena mesa. Somos una familia de descendientes italianos que llegó a <strong>Lomas del Mirador hace exactamente 25 años</strong>, con una valija repleta de recetas de nuestros antepasados y el sueño intacto de traer nuestra tradición al barrio que nos abrió las puertas.</p>
+    <p>Desde el primer día nos convertimos en un clásico indiscutido de la zona. Nos especializamos en todo tipo de comida: desde las pastas amasadas a mano hasta las carnes y platos caseros más emblemáticos. Para nosotros, la calidad no se negocia: trabajamos bajo las más estricta rigurosidad e <strong>higiene en cada etapa de preparación</strong>, garantizando alimentos seguros, frescos y con el estándar de una cocina ejemplar.</p>
+    <p>Detrás de cada servicio se encuentra nuestro mayor orgullo: cocineros experimentados y maestros de la cocina con <strong>décadas de trayectoria</strong> en el rubro, quienes defienden día a día el sabor auténtico y el respeto por los ingredientes. Lomas del Mirador es nuestro hogar, y La Reforma es la mesa donde celebramos esa pasión.</p>
+    <div class="about-highlights">
+      <div class="highlight-card"><h4>25 Años</h4><p>De historia y pertenencia en Lomas del Mirador.</p></div>
+      <div class="highlight-card"><h4>Higiene Ejemplar</h4><p>Máximos estándares de seguridad y control alimentario.</p></div>
+      <div class="highlight-card"><h4>Alta Trayectoria</h4><p>Cocineros de escuela con décadas de oficio artesanal.</p></div>
     </div>
-    <!-- VIDEO "ASÍ TRABAJAMOS" DENTRO DE LA SECCIÓN NOSOTROS -->
-<div class="contenedor-video-suelto">
-  <h3 class="titulo-video-suelto">👨‍🍳 Así trabajamos en La Reforma</h3>
-  <p class="subtitulo-video-suelto">Un poquito de nuestra pasión y esfuerzo diario directo para vos.</p>
-  
-  <div class="caja-video-central">
-    <video controls playsinline>
-      <source src="salonvideo.mp4" type="video/mp4">
-      Tu navegador no soporta videos.
-    </video>
   </div>
-</div>
-  </section>
+  
+  <div class="contenedor-video-suelto">
+    <h3 class="titulo-video-suelto">👨‍🍳 Así trabajamos en La Reforma</h3>
+    <p class="subtitulo-video-suelto">Un poquito de nuestra pasión y esfuerzo diario directo para vos.</p>
+    <div class="caja-video-central">
+      <video controls playsinline>
+        <source src="salonvideo.mp4" type="video/mp4">
+        Tu navegador no soporta videos.
+      </video>
+    </div>
+  </div>
+</section>
 
-  <!-- SECCIÓN DE RESEÑAS Y OPINIONES -->
+<!-- SECCIÓN DE RESEÑAS -->
 <section id="reseñas" class="seccion-reseñas">
   <div class="reseñas-header">
     <h2>Lo que dicen nuestros clientes</h2>
     <p>Opiniones reales de quienes nos visitan en La Reforma</p>
   </div>
-
   <div class="reseñas-grid">
-    
-    <!-- Reseña 1 -->
     <div class="tarjeta-reseña">
       <div class="reseña-autor">
         <div class="avatar-inicial" style="background-color: #d32f2f;">T</div>
-        <div>
-          <h4>Tomás Carlucci</h4>
-          <span class="fecha-reseña">Local Guide</span>
-        </div>
+        <div><h4>Tomás Carlucci</h4><span class="fecha-reseña">Local Guide</span></div>
       </div>
       <div class="estrellas">★★★★★</div>
       <p class="texto-reseña">"La mejor pizzería lejos, calidad precio increíble, el mejor pizzero de todos, súper recomendable, todo muy rico !!"</p>
-      <div class="google-badge">
-        <span class="punto-google"></span> Opinión de Google
-      </div>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
     </div>
-
-    <!-- Reseña 2 -->
+    
     <div class="tarjeta-reseña">
       <div class="reseña-autor">
         <div class="avatar-inicial" style="background-color: #1976d2;">O</div>
-        <div>
-          <h4>Oscar Grande</h4>
-          <span class="fecha-reseña">Hace 11 meses</span>
-        </div>
+        <div><h4>Oscar Grande</h4><span class="fecha-reseña">Hace 11 meses</span></div>
       </div>
       <div class="estrellas">★★★★★</div>
       <p class="texto-reseña">"Excelente lugar para ir a comer."</p>
-      <div class="google-badge">
-        <span class="punto-google"></span> Opinión de Google
-      </div>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
     </div>
 
-    <!-- Reseña 3 -->
     <div class="tarjeta-reseña">
       <div class="reseña-autor">
-        <div class="avatar-inicial" style="background-color: #388e3c;">C</div>
-        <div>
-          <h4>Candela Sánchez</h4>
-          <span class="fecha-reseña">Hace 8 meses</span>
-        </div>
+        <div class="avatar-inicial" style="background-color: #388e3c;">M</div>
+        <div><h4>Marcela Gomez</h4><span class="fecha-reseña">Hace 4 meses</span></div>
       </div>
       <div class="estrellas">★★★★★</div>
-      <p class="texto-reseña">"La mejor comida lejos, todo muy rico y muy buen precio, algunos platos son para compartir."</p>
-      <div class="google-badge">
-        <span class="punto-google"></span> Opinión de Google
-      </div>
+      <p class="texto-reseña">"Hermoso lugar, la atención es excelente y la comida casera se nota en cada plato. Súper recomendable el bife y las pastas."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
     </div>
 
-    <!-- Reseña 4 -->
     <div class="tarjeta-reseña">
       <div class="reseña-autor">
-        <div class="avatar-inicial" style="background-color: #f57c00;">N</div>
-        <div>
-          <h4>Nico Fox</h4>
-          <span class="fecha-reseña">Hace 2 años</span>
-        </div>
+        <div class="avatar-inicial" style="background-color: #f57c00;">C</div>
+        <div><h4>Carlos Benítez</h4><span class="fecha-reseña">Hace 6 meses</span></div>
       </div>
       <div class="estrellas">★★★★★</div>
-      <p class="texto-reseña">"Muy rica la comida. Los ravioles un espectáculo. Las milas muy buenas también. Precios accesibles. Voy a volver a ir."</p>
-      <div class="google-badge">
-        <span class="punto-google"></span> Opinión de Google
-      </div>
+      <p class="texto-reseña">"Un clásico de Lomas del Mirador que nunca falla. Las empanadas y las minutas son de otro planeta. ¡Precios justos!"</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
     </div>
 
-    <!-- Reseña 5 -->
     <div class="tarjeta-reseña">
       <div class="reseña-autor">
-        <div class="avatar-inicial" style="background-color: #7b1fa2;">A</div>
-        <div>
-          <h4>Alejandro Service Delta</h4>
-          <span class="fecha-reseña">Hace 8 meses</span>
-        </div>
+        <div class="avatar-inicial" style="background-color: #7b1fa2;">L</div>
+        <div><h4>Lorena S.</h4><span class="fecha-reseña">Hace 1 año</span></div>
       </div>
       <div class="estrellas">★★★★★</div>
-      <p class="texto-reseña">"Todo espectacular. Muy rico todo, buenos precios, y atención. Recomiendo este lugar. Sigan así."</p>
-      <div class="google-badge">
-        <span class="punto-google"></span> Opinión de Google
-      </div>
+      <p class="texto-reseña">"Pedimos delivery y llegó calentito y rapidísimo. Las porciones son abnegadas y riquísimas. Da gusto tenerlos en el barrio."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
     </div>
 
-    <!-- Reseña 6 -->
     <div class="tarjeta-reseña">
       <div class="reseña-autor">
-        <div class="avatar-inicial" style="background-color: #00838f;">M</div>
-        <div>
-          <h4>Martin Fleitas</h4>
-          <span class="fecha-reseña">Hace 2 años</span>
-        </div>
+        <div class="avatar-inicial" style="background-color: #c2185b;">F</div>
+        <div><h4>Federico Alonso</h4><span class="fecha-reseña">Hace 8 meses</span></div>
       </div>
       <div class="estrellas">★★★★★</div>
-      <p class="texto-reseña">"Buen precio, buenas porciones, buena atención. Lo mejor de Lomas del Mirador y alrededores."</p>
-      <div class="google-badge">
-        <span class="punto-google"></span> Opinión de Google
-      </div>
+      <p class="texto-reseña">"Impecable la higiene del lugar y la calidad humana. Da gusto sentarse a comer algo rico sintiéndose como en casa."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
     </div>
-
   </div>
-
-  <!-- Botón para ver todas en Google -->
   <div class="contenedor-btn-reseñas">
-    <a href="https://maps.app.goo.gl/NAJVrvZKBmTkPEG37" target="_blank" class="btn-ver-todas">
-      Ver todas las opiniones en Google ➔
-    </a>
+    <a href="https://maps.app.goo.gl/NAJVrvZKBmTkPEG37" target="_blank" class="btn-ver-todas">Ver todas las opiniones en Google ➔</a>
   </div>
 </section>
 
-<!-- SECCIÓN RESERVAS CON VIDEO (ESTILO DELIVERY) -->
+
+<!-- SECCIÓN RESERVAS -->
 <section id="reservas" class="seccion-reservas-cuadro">
   <div class="container reservas-flex">
-    
-    <!-- Columna del Formulario -->
     <div class="reservas-info">
       <h3>Reservá tu Mesa</h3>
       <p>Completá tus datos y te enviaremos la solicitud de reserva directo al WhatsApp del restaurante.</p>
-      
       <form id="wspForm" onsubmit="enviarWhatsApp(event)">
-        <div class="form-group">
-          <label for="nombre">Nombre y Apellido</label>
-          <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
-        </div>
+        <div class="form-group"><label for="nombre">Nombre y Apellido</label><input type="text" id="nombre" placeholder="Ej: Juan Pérez" required></div>
         <div class="form-group">
           <label for="personas">Cantidad de Personas</label>
           <select id="personas" required>
@@ -605,49 +293,28 @@
             <option value="6 personas o más">6 Personas o más</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="fecha">Fecha</label>
-          <input type="date" id="fecha" required>
-        </div>
-        <div class="form-group">
-          <label for="hora">Horario estimado</label>
-          <input type="text" id="hora" placeholder="Ej: 21:30 hs" required>
-        </div>
-        <button type="submit" class="btn-wsp">
-          📲 Reservar por WhatsApp
-        </button>
+        <div class="form-group"><label for="fecha">Fecha</label><input type="date" id="fecha" required></div>
+        <div class="form-group"><label for="hora">Horario estimado</label><input type="text" id="hora" placeholder="Ej: 21:30 hs" required></div>
+        <button type="submit" class="btn-wsp">📲 Reservar por WhatsApp</button>
       </form>
     </div>
-
-    <!-- Columna del Video de Horarios -->
     <div class="reservas-video-box">
       <video controls playsinline>
         <source src="horariodeatencion.mp4" type="video/mp4">
         Tu navegador no soporta videos.
       </video>
     </div>
-
   </div>
 </section>
 
-
-      <!-- UBICACIÓN Y MAPA CON VIDEO -->
+<!-- UBICACIÓN Y MAPA -->
 <section id="ubicacion" class="seccion-ubicacion">
   <div class="card-section">
     <h3>Dónde Encontrarnos</h3>
-    
     <div class="ubicacion-flex">
-      <!-- Columna del Mapa -->
       <div class="map-container">
-        <iframe 
-          src="https://www.google.com/maps?q=Juan+Manuel+de+Rosas+898,+Lomas+del+Mirador,+Buenos+Aires&output=embed" 
-          allowfullscreen="" 
-          loading="lazy" 
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <iframe src="https://www.google.com/maps?q=Juan+Manuel+de+Rosas+898,+Lomas+del+Mirador,+Buenos+Aires&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-
-      <!-- Columna del Video -->
       <div class="video-container">
         <video controls playsinline>
           <source src="ubicacionlareforma.mp4" type="video/mp4">
@@ -655,63 +322,22 @@
         </video>
       </div>
     </div>
-
-    <!-- Información debajo -->
     <div class="location-info">
-      <p><strong>📍 Dirección:</strong> Av. Juan Manuel de Rosas 898</p>
-      <p>Lomas del Mirador, Buenos Aires</p>
+      <p><strong>📍 Dirección:</strong> Av. Juan Manuel de Rosas 898, Lomas del Mirador, Buenos Aires</p>
       <p class="telefono-wsp"><strong>📞 WhatsApp:</strong> 11-5451-0569</p>
     </div>
   </div>
 </section>
 
-    </div>
-  </section>
+<footer>
+  <p>&copy; 2026 LA REFORMA - Tradición y Excelente Cocina en Lomas del Mirador.</p>
+</footer>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2026 LA REFORMA - Tradición y Excelente Cocina en Lomas del Mirador.</p>
-  </footer>
-
-  <!-- Enlace a tu archivo JavaScript -->
-  <script src="main.js"></script>
-
-  <script>
-  function mostrarSeccion(idSeccion, botonClickeado) {
-    // 1. Ocultar todas las secciones de la carta
-    const secciones = document.querySelectorAll('.seccion-carta');
-    secciones.forEach(seccion => {
-      seccion.classList.remove('activa');
-    });
-
-    // 2. Quitar la clase 'active' de todos los botones
-    const botones = document.querySelectorAll('.filter-btn');
-    botones.forEach(boton => {
-      boton.classList.remove('active');
-    });
-
-    // 3. Mostrar únicamente la sección seleccionada
-    const seccionAMostrar = document.getElementById(idSeccion);
-    if (seccionAMostrar) {
-      seccionAMostrar.classList.add('activa');
-    }
-
-    // 4. Activar el botón que se presionó
-    botonClickeado.classList.add('active');
-  }
-</script>
-
- <!-- Botones Flotantes con Emojis -->
 <div class="floating-social">
-  <!-- WhatsApp -->
-  <a href="https://wa.me/5491154510569" class="float-btn whatsapp" target="_blank" title="WhatsApp">
-    💬
-  </a>
-  <!-- Instagram -->
-  <a href="https://instagram.com/lareforma_lomasdelmirador" class="float-btn instagram" target="_blank" title="Instagram">
-    📷
-
-  </a>
+  <a href="https://wa.me/5491154510569" class="float-btn whatsapp" target="_blank" title="WhatsApp">💬</a>
+  <a href="https://instagram.com/lareforma_lomasdelmirador" class="float-btn instagram" target="_blank" title="Instagram">📷</a>
 </div>
+
+<script src="script.js"></script> <!-- O el nombre exacto que le hayas puesto a tu archivo js -->
 </body>
 </html>
