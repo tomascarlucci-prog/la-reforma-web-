@@ -1032,86 +1032,32 @@ html {
     border-color: #ff4d4d;
   }
 }
-/* ========================================= */
-/* MENÚ HAMBURGUESA Y MÓVIL - CORRECCIÓN TOTAL */
-/* ========================================= */
-
-@media (max-width: 768px) {
-  /* Forzar que el header sea rojo y negro, sin bordes raros */
-  header, .navbar {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    background-color: #121212 !important;
-    padding: 12px 20px !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1000 !important;
-    border-bottom: 2px solid #ff4d4d !important;
-  }
-
-  /* Mostrar siempre el botón de hamburguesa en celulares */
-  .menu-hamburguesa {
-    display: block !important;
-    background: transparent !important;
-    border: none !important;
-    color: #ff4d4d !important;
-    font-size: 2.2rem !important;
-    cursor: pointer !important;
-    padding: 0 !important;
-    line-height: 1 !important;
-  }
-
-  /* Ocultar el menú por defecto en celular */
-  .nav-links, .menu-navegacion {
-    display: none !important; 
-    flex-direction: column !important;
-    position: absolute !important;
-    top: 100% !important;
-    left: 0 !important;
-    width: 100% !important;
-    background-color: #1a1a1a !important; /* Fondo sólido oscuro profesional */
-    padding: 20px 0 !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.9) !important;
-    border-bottom: 3px solid #ff4d4d !important;
-    list-style: none !important;
-    margin: 0 !important;
-    z-index: 999 !important;
-  }
-
-  /* CLASE CLAVE: Cuando JavaScript agregue .active, se muestra el menú */
-  .nav-links.active, .menu-navegacion.active {
-    display: flex !important;
-  }
-
-  /* Elementos de la lista desplegada */
-  .nav-links li, .menu-navegacion li {
-    text-align: center !important;
-    margin: 10px 0 !important;
-    width: 100% !important;
-  }
-
-  .nav-links a, .menu-navegacion a {
-    color: #ffffff !important;
-    font-size: 1.1rem !important;
-    text-decoration: none !important;
-    font-weight: bold !important;
-    display: inline-block !important;
-    padding: 8px 20px !important;
-    border: 1px solid #ff4d4d !important;
-    border-radius: 20px !important;
-    background-color: #121212 !important;
-  }
-
-  .nav-links a:hover, .nav-links a:active {
-    background-color: #ff4d4d !important;
-    color: #fff !important;
-  }
+/* Corrección de colores y visibilidad */
+.navbar {
+  background-color: #121212 !important;
+  border-bottom: 3px solid #ff4d4d !important; /* ¡Acá está el marco rojo! */
 }
 
-/* En PC (pantallas grandes) se oculta la hamburguesa obligatorio */
-@media (min-width: 769px) {
-  .menu-hamburguesa {
-    display: none !important;
-  }
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+#btn-hamburguesa {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: none; /* Oculto por defecto */
+  flex-direction: column;
+  background: #1a1a1a;
+  padding: 20px;
+  list-style: none;
+  text-align: center;
 }
