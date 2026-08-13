@@ -54,3 +54,66 @@ document.addEventListener("DOMContentLoaded", function() {
     inputFecha.min = hoy;
   }
 });
+/* Contenedor de botones con scroll horizontal prolijo para celulares */
+.menu-filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #ff4d4d #2a2a2a;
+}
+
+/* Estilo de los botones del menú */
+.filter-btn {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.filter-btn:hover {
+  background-color: #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+/* Botón activo (seleccionado) */
+.filter-btn.active {
+  background-color: #ff4d4d;
+  color: white;
+  border-color: #ff4d4d;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+}
+
+<script>
+  function mostrarSeccion(idSeccion, botonClickeado) {
+    // 1. Ocultar todas las secciones de la carta
+    const secciones = document.querySelectorAll('.seccion-carta');
+    secciones.forEach(seccion => {
+      seccion.classList.remove('activa');
+    });
+
+    // 2. Quitar la clase 'active' de todos los botones
+    const botones = document.querySelectorAll('.filter-btn');
+    botones.forEach(boton => {
+      boton.classList.remove('active');
+    });
+
+    // 3. Mostrar únicamente la sección seleccionada
+    const seccionAMostrar = document.getElementById(idSeccion);
+    if (seccionAMostrar) {
+      seccionAMostrar.classList.add('activa');
+    }
+
+    // 4. Activar el botón que se presionó
+    botonClickeado.classList.add('active');
+  }
+</script>
