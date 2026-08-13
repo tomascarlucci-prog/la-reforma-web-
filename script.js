@@ -82,9 +82,8 @@ function mostrarSeccion(idSeccion, botonClickeado) {
 
 /* ========================================= */
 /* FUNCIÓN PARA EL MENÚ HAMBURGUESA MÓVIL */
-/* ========================================= */
 function toggleMenu() {
-  const menu = document.querySelector('.nav-links');
+  const menu = document.getElementById('menu-desplegable');
   if (menu.style.display === 'flex') {
     menu.style.display = 'none';
   } else {
