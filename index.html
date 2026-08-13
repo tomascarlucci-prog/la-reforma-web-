@@ -14,24 +14,26 @@
 </head>
 <body>
 
-  <!-- NAVEGACIÓN -->
- <header class="navbar">
-  <div class="header-container">
-    <a href="#" class="logo">LA REFORMA</a>
-    <!-- Le agregué un ID al botón para asegurarnos de que el JS lo encuentre -->
-    <button id="btn-hamburguesa" onclick="toggleMenu()">☰</button>
+<!-- NAVEGACIÓN -->
+<header style="background-color: #ff4d4d; border-bottom: 3px solid #cc0000; position: relative; z-index: 1000;">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
+    <a href="#" style="color: #ffffff; font-size: 1.5rem; font-weight: bold; text-decoration: none;">LA REFORMA</a>
+    
+    <!-- Botón hamburguesa -->
+    <button onclick="toggleMenu()" style="background: none; border: none; color: #ffffff; font-size: 2rem; cursor: pointer; padding: 0;">☰</button>
   </div>
 
-  <ul class="nav-links">
-    <li><a href="#menu">Menú</a></li>
-    <li><a href="#historia">Nosotros</a></li>
-    <li><a href="#reservas">Reservas</a></li>
-    <li><a href="#ubicacion">Ubicación</a></li>
-    <li><a href="#delivery">Delivery</a></li>
-    <li><a href="#platos">Platos especiales</a></li>
-    <li><a href="#reseñas">Reseñas y opiniones</a></li>
+  <!-- Menú desplegable rojo con letras blancas -->
+  <ul id="menu-desplegable" style="display: none; flex-direction: column; background-color: #ff4d4d; list-style: none; padding: 20px 0; margin: 0; text-align: center; border-top: 2px solid #cc0000; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+    <li style="margin: 10px 0;"><a href="#menu" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Menú</a></li>
+    <li style="margin: 10px 0;"><a href="#historia" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Nosotros</a></li>
+    <li style="margin: 10px 0;"><a href="#reservas" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Reservas</a></li>
+    <li style="margin: 10px 0;"><a href="#ubicacion" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Ubicación</a></li>
+    <li style="margin: 10px 0;"><a href="#delivery" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Delivery</a></li>
+    <li style="margin: 10px 0;"><a href="#platos" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Platos especiales</a></li>
+    <li style="margin: 10px 0;"><a href="#reseñas" style="color: #ffffff; text-decoration: none; font-size: 1.1rem; font-weight: bold;">Reseñas y opiniones</a></li>
   </ul>
-</header>s
+</header>
 
   <!-- --- HERO CON DOBLE FONDO TENUE (CSS PURO) --- -->
   <div class="hero" id="hero-slideshow">
