@@ -23,6 +23,8 @@
         <li><a href="#historia">Nosotros</a></li>
         <li><a href="#reservas">Reservas</a></li>
         <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="#delivery">Delivery</a></li>
+        <li><a href="#platos">Platos especiales</a></li>
       </ul>
     </nav>
   </header>
@@ -46,65 +48,176 @@
     <h2 class="section-title">Nuestro Menú</h2>
     <p class="section-subtitle">Especialidades elaboradas con la máxima higiene y dedicación</p>
 
-    <!-- Botones de navegación del menú -->
+    <!-- BOTONES DE NAVEGACIÓN DEL MENÚ -->
 <div class="menu-filters">
-      <a href="#todos" class="filter-btn active">Todos</a>
-      <a href="#pastas" class="filter-btn">Pastas & Salsas</a>
-      <a href="#carnes" class="filter-btn">Carnes & Especiales</a>
-      <a href="#postres" class="filter-btn">Postres Clásicos</a>
-      <a href="#pizzas" class="filter-btn">Pizzas & Empanadas</a>
+  <button class="filter-btn active" onclick="mostrarSeccion('cafeteria', this)">Cafetería / Sándwiches</button>
+  <button class="filter-btn" onclick="mostrarSeccion('entradas', this)">Nuestras Entradas</button>
+  <button class="filter-btn" onclick="mostrarSeccion('parrilla', this)">Parrilla (Por Porción)</button>
+  <button class="filter-btn" onclick="mostrarSeccion('pastas', this)">Pastas / Salsas</button>
+  <button class="filter-btn" onclick="mostrarSeccion('minutas', this)">Nuestras Minutas</button>
+  <button class="filter-btn" onclick="mostrarSeccion('ensaladas', this)">Nuestras Ensaladas</button>
+  <button class="filter-btn" onclick="mostrarSeccion('acompanar', this)">Para Acompañar</button>
+  <button class="filter-btn" onclick="mostrarSeccion('pizzas', this)">Pizzas / Empanadas</button>
+  <button class="filter-btn" onclick="mostrarSeccion('postres', this)">Postres / Helados</button>
+  <button class="filter-btn" onclick="mostrarSeccion('sin-alcohol', this)">Bebidas Sin Alcohol</button>
+  <button class="filter-btn" onclick="mostrarSeccion('licuados', this)">Licuados y Jugos</button>
+  <button class="filter-btn" onclick="mostrarSeccion('cervezas', this)">Cervezas / Porrón</button>
+  <button class="filter-btn" onclick="mostrarSeccion('aperitivos', this)">Aperitivos</button>
+  <button class="filter-btn" onclick="mostrarSeccion('vinos-blancos', this)">Vinos Blancos</button>
+  <button class="filter-btn" onclick="mostrarSeccion('espumantes', this)">Espumantes y Rosados</button>
+  <button class="filter-btn" onclick="mostrarSeccion('vinos-tintos', this)">Vinos Tintos</button>
+  <button class="filter-btn" onclick="mostrarSeccion('spirits', this)">Licores y Spirits</button>
+  <button class="filter-btn" onclick="mostrarSeccion('whiskies', this)">Whiskies</button>
 </div>
 
-<!-- Sección general (Todos o inicio de la carta) -->
-<div id="todos" class="seccion-carta">
-  <!-- Aquí puedes dejar o poner una vista general si lo deseas -->
+<!-- CONTENEDOR DE LAS SECCIONES DE LA CARTA -->
+<div class="menu-container-sections">
+
+  <!-- 1. Cafetería / Sándwiches -->
+  <section id="cafeteria" class="seccion-carta activa">
+    <h2>Cafetería & Sándwiches</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 2. Entradas -->
+  <section id="entradas" class="seccion-carta">
+    <h2>Nuestras Entradas</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 3. Parrilla -->
+  <section id="parrilla" class="seccion-carta">
+    <h2>Nuestra Parrilla (Por Porción)</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 4. Pastas -->
+  <section id="pastas" class="seccion-carta">
+    <h2>Nuestras Pastas / Salsas</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 5. Minutas -->
+  <section id="minutas" class="seccion-carta">
+    <h2>Nuestras Minutas</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 6. Ensaladas -->
+  <section id="ensaladas" class="seccion-carta">
+    <h2>Nuestras Ensaladas</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 7. Para Acompañar -->
+  <section id="acompanar" class="seccion-carta">
+    <h2>Para Acompañar</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 8. Pizzas / Empanadas -->
+  <section id="pizzas" class="seccion-carta">
+    <h2>Nuestras Pizzas / Empanadas</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 9. Postres -->
+  <section id="postres" class="seccion-carta">
+    <h2>Nuestros Postres / Postres Helados</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 10. Bebidas sin alcohol -->
+  <section id="sin-alcohol" class="seccion-carta">
+    <h2>Bebidas Sin Alcohol</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 11. Licuados y jugos -->
+  <section id="licuados" class="seccion-carta">
+    <h2>Licuados y Jugos</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 12. Cervezas -->
+  <section id="cervezas" class="seccion-carta">
+    <h2>Cervezas / Cerveza Porrón</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 13. Aperitivos -->
+  <section id="aperitivos" class="seccion-carta">
+    <h2>Aperitivos</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 14. Vinos blancos -->
+  <section id="vinos-blancos" class="seccion-carta">
+    <h2>Vinos Blancos</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 15. Espumantes y rosados -->
+  <section id="espumantes" class="seccion-carta">
+    <h2>Espumantes y Rosados</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 16. Vinos tintos -->
+  <section id="vinos-tintos" class="seccion-carta">
+    <h2>Vinos Tintos</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 17. Spirits -->
+  <section id="spirits" class="seccion-carta">
+    <h2>Licores y Spirits</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
+  <!-- 18. Whiskies -->
+  <section id="whiskies" class="seccion-carta">
+    <h2>Whiskies</h2>
+    <div class="item-carta">
+      <h3></h3><span></span><p></p>
+    </div>
+  </section>
+
 </div>
-
-<!-- Sección Pastas -->
-<section id="pastas" class="seccion-carta">
-  <h2>Pastas & Salsas</h2>
-  <!-- Aquí luego cargas tus fotos y platos de pastas -->
-  <div class="item-carta">
-    <!-- <img src="tu-foto.jpg" alt="Foto del Plato"> -->
-    <h3>Sorrentinos de la Nonna</h3>
-    <span>$8.500</span>
-    <p>Rellenos de jamón y mozzarella...</p>
-  </div>
-</section>
-
-<!-- Sección Carnes -->
-<section id="carnes" class="seccion-carta">
-  <h2>Carnes & Especiales</h2>
-  <!-- Aquí luego cargas tus fotos y platos de carnes -->
-  <div class="item-carta">
-    <!-- <img src="tu-foto.jpg" alt="Foto del Plato"> -->
-    <h3>Milanesa "La Reforma"</h3>
-    <span>$11.000</span>
-    <p>Corte de ternera tiernizado...</p>
-  </div>
-</section>
-
-<!-- Sección Postres -->
-<section id="postres" class="seccion-carta">
-  <h2>Postres Clásicos</h2>
-  <!-- Aquí luego cargas tus fotos y postres -->
-  <div class="item-carta">
-    <!-- <img src="tu-foto.jpg" alt="Foto del Postre"> -->
-    <h3>Postre del Día</h3>
-    <span>$0.000</span>
-  </div>
-</section>
-
-<!-- Sección Pizzas & Empanadas -->
-<section id="pizzas" class="seccion-carta">
-  <h2>Pizzas & Empanadas</h2>
-  <!-- Aquí luego cargas tus fotos y variedades -->
-  <div class="item-carta">
-    <!-- <img src="tu-foto.jpg" alt="Foto de la Pizza"> -->
-    <h3>Pizza Muzza Especial</h3>
-    <span>$9.000</span>
-  </div>
-</section>
 
     <div class="menu-grid" id="menu-grid">
       <!-- PLATO 1 -->
@@ -193,6 +306,115 @@
     </div>
   </section>
 
+ <!-- SECCIÓN DELIVERY CON VIDEO EN CUADRO Y SONIDO -->
+<section id="delivery" class="seccion-delivery-cuadro">
+  <div class="container delivery-flex">
+    
+    <!-- Columna del texto -->
+    <div class="delivery-info">
+      <h2>🛵 Delivery Propio</h2>
+      <p>Pedí nuestras especialidades y te las llevamos a la puerta de tu casa, calentitas y al instante.</p>
+      
+      <div class="delivery-datos">
+        <p><strong>📍 Zonas:</strong> Lomas del Mirador.</p>
+        <p><strong>⏰ Horarios:</strong> lunes a sabados: 12 a 15 hs / 20 a 23:00 hs</p>
+      </div>
+
+      <a href="https://wa.me/5491154510569?text=Hola!%20Quiero%20pedir%20delivery" target="_blank" class="btn-whatsapp">Pedir por WhatsApp</a>
+    </div>
+
+    <!-- Columna del video con controles y sonido -->
+    <div class="delivery-video-box">
+      <video controls playsinline>
+        <source src="deliveryvideo.mp4" type="video/mp4">
+        Tu navegador no soporta videos.
+      </video>
+    </div>
+
+  </div>
+</section>
+<!-- SECCIÓN PLATOS ESPECIALES -->
+<section id="platos" class="seccion-platos">
+  <div class="container">
+    <h2>🌟 Platos Especiales</h2>
+    <p>Lo mejor de nuestra cocina, seleccionado por nuestro chef.</p>
+
+    <div class="platos-grid">
+      <!-- Plato 1 -->
+      <div class="plato-card">
+        <img src="vacioalhorno.jpg" alt="Plato especial 1">
+        <h3>Milanesa "La Reforma"</h3>
+        <p>Vacio al horno con papas.</p>
+        <span class="precio">$ 12.500</span>
+      </div>
+
+      <!-- Plato 2 -->
+      <div class="plato-card">
+        <img src="pecetoalamostaza.jpg" alt="Plato especial 2">
+        <h3>Peceto a la mostaza</h3>
+        <p>Peceto a la mostaza.</p>
+        <span class="precio">$ 9.800</span>
+      </div>
+
+      <!-- Plato 3 -->
+      <div class="plato-card">
+        <img src="arrozconcalamares.jpg" alt="Plato especial 3">
+        <h3>Arroz con calamares</h3>
+        <p>.</p>
+        <span class="precio">$ 14.200</span>
+      </div>
+
+      <!-- Plato 4 -->
+      <div class="plato-card">
+        <img src="carremechadoconbatata.jpg" alt="Plato especial 4">
+        <h3>B</h3>
+        <p>Carré con batata.</p>
+        <span class="precio">$ 14.200</span>
+      </div>
+
+      <!-- Plato 5 -->
+      <div class="plato-card">
+        <img src="milanesacompleta.jpg" alt="Plato especial 5">
+        <h3>Milanesa Completa</h3>
+        <p>Huevo, jamón, queso, muzzarella, salsa.</p>
+        <span class="precio">$ 14.200</span>
+      </div>
+
+      <!-- Plato 6 -->
+      <div class="plato-card">
+        <img src="calzonnapo.jpg" alt="Plato especial 6">
+        <h3>Calzón Napolitano</h3>
+        <p>Jamón, queso, tomate y albahaca.</p>
+        <span class="precio">$ 14.200</span>
+      </div>
+
+      <!-- Plato 7 -->
+      <div class="plato-card">
+        <img src="fugazetarellena.jpg" alt="Plato especial 7">
+        <h3>Fugazzeta rellena</h3>
+        <p>Descripción del plato.</p>
+        <span class="precio">$ 12.000</span>
+      </div>
+
+      <!-- Plato 8 -->
+      <div class="plato-card">
+        <img src="sorrentinosconrosa.jpg" alt="Plato especial 8">
+        <h3>Sorrentinos con rosa</h3>
+        <p>Descripción del plato.</p>
+        <span class="precio">$ 13.500</span>
+      </div>
+
+      <!-- Plato 9 -->
+      <div class="plato-card">
+        <img src="colitaconpapas.jpg" alt="Plato especial 9">
+        <h3>Colita con Papas</h3>
+        <p>Colita de cuadril al horno con papas doradas.</p>
+        <span class="precio">$ 15.000</span>
+      </div>
+    </div>
+  </div>
+</section>
+
   <!-- SECCIÓN 2: SOBRE NOSOTROS -->
   <section id="historia">
     <h2 class="section-title">Sobre Nosotros</h2>
@@ -224,65 +446,103 @@
         </div>
       </div>
     </div>
+    <!-- VIDEO "ASÍ TRABAJAMOS" DENTRO DE LA SECCIÓN NOSOTROS -->
+<div class="contenedor-video-suelto">
+  <h3 class="titulo-video-suelto">👨‍🍳 Así trabajamos en La Reforma</h3>
+  <p class="subtitulo-video-suelto">Un poquito de nuestra pasión y esfuerzo diario directo para vos.</p>
+  
+  <div class="caja-video-central">
+    <video controls playsinline>
+      <source src="salonvideo.mp4" type="video/mp4">
+      Tu navegador no soporta videos.
+    </video>
+  </div>
+</div>
   </section>
 
-  <!-- SECCIÓN 3 Y 4: RESERVAS Y UBICACIÓN -->
-  <section id="reservas">
-    <div class="contact-grid">
+<!-- SECCIÓN RESERVAS CON VIDEO (ESTILO DELIVERY) -->
+<section id="reservas" class="seccion-reservas-cuadro">
+  <div class="container reservas-flex">
+    
+    <!-- Columna del Formulario -->
+    <div class="reservas-info">
+      <h3>Reservá tu Mesa</h3>
+      <p>Completá tus datos y te enviaremos la solicitud de reserva directo al WhatsApp del restaurante.</p>
       
-      <!-- RESERVA WHATSAPP -->
-      <div class="card-section">
-        <h3>Reservá tu Mesa</h3>
-        <p class="reserva-desc">
-          Completá tus datos y te enviaremos la solicitud de reserva directo al WhatsApp del restaurante.
-        </p>
-        
-        <form id="wspForm" onsubmit="enviarWhatsApp(event)">
-          <div class="form-group">
-            <label for="nombre">Nombre y Apellido</label>
-            <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
-          </div>
-          <div class="form-group">
-            <label for="personas">Cantidad de Personas</label>
-            <select id="personas" required>
-              <option value="2 personas">2 Personas</option>
-              <option value="3 personas">3 Personas</option>
-              <option value="4 personas">4 Personas</option>
-              <option value="5 personas">5 Personas</option>
-              <option value="6 personas o más">6 Personas o más</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="fecha">Fecha</label>
-            <input type="date" id="fecha" required>
-          </div>
-          <div class="form-group">
-    <label for="hora">Horario estimado</label>
-    <input type="text" id="hora" placeholder="Ej: 21:30 hs" required>
-</div>
-          <button type="submit" class="btn-wsp">
-            📲 Reservar por WhatsApp
-          </button>
-        </form>
+      <form id="wspForm" onsubmit="enviarWhatsApp(event)">
+        <div class="form-group">
+          <label for="nombre">Nombre y Apellido</label>
+          <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+        </div>
+        <div class="form-group">
+          <label for="personas">Cantidad de Personas</label>
+          <select id="personas" required>
+            <option value="2 personas">2 Personas</option>
+            <option value="3 personas">3 Personas</option>
+            <option value="4 personas">4 Personas</option>
+            <option value="5 personas">5 Personas</option>
+            <option value="6 personas o más">6 Personas o más</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" required>
+        </div>
+        <div class="form-group">
+          <label for="hora">Horario estimado</label>
+          <input type="text" id="hora" placeholder="Ej: 21:30 hs" required>
+        </div>
+        <button type="submit" class="btn-wsp">
+          📲 Reservar por WhatsApp
+        </button>
+      </form>
+    </div>
+
+    <!-- Columna del Video de Horarios -->
+    <div class="reservas-video-box">
+      <video controls playsinline>
+        <source src="horariodeatencion.mp4" type="video/mp4">
+        Tu navegador no soporta videos.
+      </video>
+    </div>
+
+  </div>
+</section>
+
+
+      <!-- UBICACIÓN Y MAPA CON VIDEO -->
+<section id="ubicacion" class="seccion-ubicacion">
+  <div class="card-section">
+    <h3>Dónde Encontrarnos</h3>
+    
+    <div class="ubicacion-flex">
+      <!-- Columna del Mapa -->
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps?q=Juan+Manuel+de+Rosas+898,+Lomas+del+Mirador,+Buenos+Aires&output=embed" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
 
-      <!-- UBICACIÓN Y MAPA -->
-      <div class="card-section" id="ubicacion">
-        <h3>Dónde Encontrarnos</h3>
-        <div class="map-container">
-          <iframe 
-            src="https://www.google.com/maps?q=Juan+Manuel+de+Rosas+898,+Lomas+del+Mirador,+Buenos+Aires&output=embed" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
-        <div class="location-info">
-          <p><strong>📍 Dirección:</strong> Av. Juan Manuel de Rosas 898</p>
-          <p>Lomas del Mirador, Buenos Aires</p>
-          <p class="telefono-wsp"><strong>📞 WhatsApp:</strong> 11-5451-0569</p>
-        </div>
+      <!-- Columna del Video -->
+      <div class="video-container">
+        <video controls playsinline>
+          <source src="ubicacionlareforma.mp4" type="video/mp4">
+          Tu navegador no soporta videos.
+        </video>
       </div>
+    </div>
+
+    <!-- Información debajo -->
+    <div class="location-info">
+      <p><strong>📍 Dirección:</strong> Av. Juan Manuel de Rosas 898</p>
+      <p>Lomas del Mirador, Buenos Aires</p>
+      <p class="telefono-wsp"><strong>📞 WhatsApp:</strong> 11-5451-0569</p>
+    </div>
+  </div>
+</section>
 
     </div>
   </section>
@@ -295,6 +555,31 @@
   <!-- Enlace a tu archivo JavaScript -->
   <script src="main.js"></script>
 
+  <script>
+  function mostrarSeccion(idSeccion, botonClickeado) {
+    // 1. Ocultar todas las secciones de la carta
+    const secciones = document.querySelectorAll('.seccion-carta');
+    secciones.forEach(seccion => {
+      seccion.classList.remove('activa');
+    });
+
+    // 2. Quitar la clase 'active' de todos los botones
+    const botones = document.querySelectorAll('.filter-btn');
+    botones.forEach(boton => {
+      boton.classList.remove('active');
+    });
+
+    // 3. Mostrar únicamente la sección seleccionada
+    const seccionAMostrar = document.getElementById(idSeccion);
+    if (seccionAMostrar) {
+      seccionAMostrar.classList.add('activa');
+    }
+
+    // 4. Activar el botón que se presionó
+    botonClickeado.classList.add('active');
+  }
+</script>
+
  <!-- Botones Flotantes con Emojis -->
 <div class="floating-social">
   <!-- WhatsApp -->
@@ -304,6 +589,7 @@
   <!-- Instagram -->
   <a href="https://instagram.com/lareforma_lomasdelmirador" class="float-btn instagram" target="_blank" title="Instagram">
     📷
+
   </a>
 </div>
 </body>

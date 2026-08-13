@@ -480,3 +480,359 @@ html {
 .float-btn.instagram {
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
 }
+/* ESTILOS SECCIÓN DELIVERY CON VIDEO EN CUADRO */
+.seccion-delivery-cuadro {
+  padding: 60px 20px;
+  background-color: #1a1a1a; /* Fondo oscuro elegante estilo bodegón moderno */
+  color: white;
+}
+
+.delivery-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap; /* Se acomoda solo en los celulares */
+}
+
+.delivery-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.delivery-info h2 {
+  color: #ff4d4d;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.delivery-info p {
+  color: #cccccc;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.delivery-datos {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  border-left: 4px solid #ff4d4d;
+}
+
+.delivery-datos p {
+  margin: 5px 0;
+  color: #ffffff;
+}
+
+/* Botón de WhatsApp */
+.btn-whatsapp {
+  display: inline-block;
+  background-color: #25d366;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+  background-color: #20ba5a;
+  transform: translateY(-2px);
+}
+
+/* Caja del video en formato cuadro */
+.delivery-video-box {
+  flex: 1;
+  min-width: 260px;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.1);
+  background: #000;
+}
+
+.delivery-video-box video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* ESTILOS SECCIÓN PLATOS ESPECIALES */
+.seccion-platos {
+  padding: 60px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.seccion-platos h2 {
+  color: #b30000;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.platos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1100px;
+  margin: 40px auto 0;
+}
+}
+
+.plato-card {
+  background: #fdfdfd;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.plato-card:hover {
+  transform: translateY(-10px);
+}
+
+.plato-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover; /* Esto asegura que todas las fotos tengan el mismo tamaño */
+}
+
+.plato-card h3 {
+  margin: 15px 0 10px;
+  color: #222;
+}
+
+.plato-card p {
+  padding: 0 20px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.precio {
+  display: block;
+  font-weight: bold;
+  color: #b30000;
+  font-size: 1.2rem;
+  margin: 15px 0;
+}
+/* ESTILOS PARA EL VIDEO SUELTO "ASÍ TRABAJAMOS" */
+.contenedor-video-suelto {
+  margin-top: 40px; /* Lo separa del texto que tenga arriba */
+  text-align: center;
+  padding: 20px;
+}
+
+.titulo-video-suelto {
+  color: #b30000; /* Color rojo de La Reforma */
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.subtitulo-video-suelto {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+.caja-video-central {
+  max-width: 700px; /* Ancho máximo para que no sea gigante en la compu */
+  margin: 0 auto; /* Lo centra automáticamente */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+  border: 3px solid #f0f0f0;
+  background: #000;
+}
+
+.caja-video-central video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* Estilo para acomodar mapa y video */
+.ubicacion-flex {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Esto hace que se apilen en celulares */
+  margin-bottom: 20px;
+}
+
+.map-container, .video-container {
+  flex: 1;
+  min-width: 300px; /* Tamaño mínimo para que no se achiquen demasiado */
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* <-- Cambiá 'cover' por 'contain' acá */
+  background-color: #000; /* Recomendado: fondo negro si quedan bandas a los lados */
+  display: block;
+}
+/* Ajuste para la info */
+.location-info {
+  text-align: center;
+  padding: 10px;
+}
+
+/* ESTILOS SECCIÓN RESERVAS (ESTILO DELIVERY COMPACTO) */
+.seccion-reservas-cuadro {
+  padding: 30px 20px; /* Reducido para que no ocupe tanta altura */
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.reservas-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.reservas-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.reservas-info h3 {
+  color: #ff4d4d;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.reservas-info p {
+  color: #cccccc;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Cuadro del video más chico y compacto */
+.reservas-video-box {
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px; 
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  background-color: #000;
+}
+
+.reservas-video-box video {
+  width: 100%;
+  max-height: 320px; /* Limita la altura del video */
+  object-fit: contain; /* Evita el zoom y muestra el video entero */
+  display: block;
+  margin: 0 auto;
+}
+/* Contenedor de botones con scroll horizontal prolijo para celulares */
+.menu-filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #ff4d4d #2a2a2a;
+}
+
+/* ========================================= */
+/* ESTILOS PARA LOS BOTONES Y PESTAÑAS DEL MENÚ */
+/* ========================================= */
+
+.menu-filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #ff4d4d #2a2a2a;
+}
+
+/* Estilo de los botones del menú */
+.filter-btn {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.filter-btn:hover {
+  background-color: #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+/* Botón activo (seleccionado) */
+.filter-btn.active {
+  background-color: #ff4d4d;
+  color: white;
+  border-color: #ff4d4d;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+}
+
+/* Ocultar por defecto todas las secciones de la carta */
+.seccion-carta {
+  display: none;
+  padding: 30px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #ffffff;
+}
+
+/* Mostrar únicamente la sección que tenga la clase 'activa' */
+.seccion-carta.activa {
+  display: block;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Animación suave al abrir una categoría */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.seccion-carta h2 {
+  color: #ff4d4d;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff4d4d;
+  padding-bottom: 10px;
+}
+
+/* Estilo base para los ítems de la carta */
+.item-carta {
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #333;
+}
