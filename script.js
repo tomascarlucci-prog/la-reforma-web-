@@ -1,26 +1,5 @@
 // ==========================================
-// 1. FILTRADO DEL MENÚ POR CATEGORÍA
-// ==========================================
-function filtrarMenu(categoria, event) {
-  const tarjetas = document.querySelectorAll('.dish-card');
-  const botones = document.querySelectorAll('.filter-btn');
-
-  botones.forEach(btn => btn.classList.remove('active'));
-  if (event) {
-    event.target.classList.add('active');
-  }
-
-  tarjetas.forEach(tarjeta => {
-    if (categoria === 'todos' || tarjeta.dataset.categoria === categoria) {
-      tarjeta.style.display = 'flex';
-    } else {
-      tarjeta.style.display = 'none';
-    }
-  });
-}
-
-// ==========================================
-// 2. SISTEMA DE RESERVAS POR WHATSAPP
+// 1. SISTEMA DE RESERVAS POR WHATSAPP
 // ==========================================
 function enviarWhatsApp(e) {
   e.preventDefault();
@@ -44,49 +23,51 @@ function enviarWhatsApp(e) {
 }
 
 // ==========================================
-// 3. CONFIGURACIÓN DE FECHA AL CARGAR LA WEB
+// 2. CONFIGURACIÓN DE FECHA AL CARGAR LA WEB
 // ==========================================
 document.addEventListener("DOMContentLoaded", function() {
   const inputFecha = document.getElementById('fecha');
   if (inputFecha) {
     const hoy = new Date().toISOString().split('T')[0];
     inputFecha.value = hoy;
-    inputFecha.min = hoy;
+    inputFecha.min = hoy; // Evita seleccionar días del pasado
   }
 });
-/* ========================================= */
-/* FUNCIÓN PARA MOSTRAR LAS SECCIONES DE LA CARTA */
-/* ========================================= */
+
 function mostrarSeccion(idSeccion, botonClickeado) {
-  // 1. Ocultar todas las secciones de la carta
+  console.log("Intentando mostrar la sección:", idSeccion); // Esto saldrá en la consola
+
+  // Ocultar todas las secciones
   const secciones = document.querySelectorAll('.seccion-carta');
   secciones.forEach(seccion => {
     seccion.classList.remove('activa');
   });
 
-  // 2. Quitar la clase 'active' de todos los botones
+  // Quitar 'active' de todos los botones
   const botones = document.querySelectorAll('.filter-btn');
   botones.forEach(boton => {
     boton.classList.remove('active');
   });
 
-  // 3. Mostrar únicamente la sección seleccionada
+  // Mostrar la seleccionada
   const seccionAMostrar = document.getElementById(idSeccion);
   if (seccionAMostrar) {
     seccionAMostrar.classList.add('activa');
-  }
-
-  // 4. Activar el botón que se presionó
-  botonClickeado.classList.add('active');
-}
-
-/* ========================================= */
-/* FUNCIÓN PARA EL MENÚ HAMBURGUESA MÓVIL */
-function toggleMenu() {
-  const menu = document.getElementById('menu-desplegable');
-  if (menu.style.display === 'flex') {
-    menu.style.display = 'none';
+    console.log("¡Sección encontrada y activada con éxito!");
   } else {
-    menu.style.display = 'flex';
+    console.error("¡ERROR! No se encontró ninguna sección con el ID:", idSeccion);
   }
+
+  // Activar el botón presionado
+  if (botonClickeado) {
+    botonClickeado.classList.add('active');
+  }
+}
+// ==========================================
+// 4. FUNCIÓN PARA EL MENÚ HAMBURGUESA MÓVIL
+// ==========================================
+function toggleMenu() {
+    var navLinks = document.querySelector('.nav-links');
+    // Al agregar o quitar esta clase, el CSS se encarga de mostrarlo y animarlo
+    navLinks.classList.toggle('active'); 
 }
