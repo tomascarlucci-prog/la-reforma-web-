@@ -1032,3 +1032,86 @@ html {
     border-color: #ff4d4d;
   }
 }
+/* ========================================= */
+/* MENÚ HAMBURGUESA MÓVIL - ESTILO LA REFORMA */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  /* Header adaptado para celus */
+  header, .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #121212;
+    padding: 12px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #ff4d4d; /* Línea roja característica */
+  }
+
+  /* Botón de hamburguesa en color rojo */
+  .menu-hamburguesa {
+    display: block;
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 2.2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  /* El menú desplegable (oculto por defecto) */
+  .nav-links, .menu-navegacion {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #1a1a1a;
+    padding: 20px 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    border-bottom: 3px solid #ff4d4d;
+    list-style: none;
+    margin: 0;
+    z-index: 999;
+  }
+
+  /* Clase que activa el menú al hacer clic */
+  .nav-links.active, .menu-navegacion.active {
+    display: flex;
+  }
+
+  /* Estilo de cada opción dentro del menú desplegado */
+  .nav-links li, .menu-navegacion li {
+    text-align: center;
+    margin: 12px 0;
+  }
+
+  .nav-links a, .menu-navegacion a {
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #ff4d4d; /* Bordes rojos a juego */
+    border-radius: 20px;
+    background-color: #121212;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a:hover, .nav-links a:active {
+    background-color: #ff4d4d;
+    color: #fff;
+  }
+}
+
+/* En PC (pantallas grandes) se oculta el botón hamburguesa */
+@media (min-width: 769px) {
+  .menu-hamburguesa {
+    display: none;
+  }
+}
