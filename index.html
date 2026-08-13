@@ -15,21 +15,23 @@
 <body>
 
   <!-- NAVEGACIÓN -->
-  <header>
-    <nav>
-      <a href="#" class="logo">La Reforma</a>
-      <button class="menu-hamburguesa" onclick="toggleMenu()">☰</button>
-      <ul class="nav-links">
-        <li><a href="#menu">Menú</a></li>
-        <li><a href="#historia">Nosotros</a></li>
-        <li><a href="#reservas">Reservas</a></li>
-        <li><a href="#ubicacion">Ubicación</a></li>
-        <li><a href="#delivery">Delivery</a></li>
-        <li><a href="#platos">Platos especiales</a></li>
-        <li><a href="#reseñas">Reseñas y opiniones</a></li>
-      </ul>
-    </nav>
-  </header>
+ <header class="navbar">
+  <div class="header-container">
+    <a href="#" class="logo">LA REFORMA</a>
+    <!-- Le agregué un ID al botón para asegurarnos de que el JS lo encuentre -->
+    <button id="btn-hamburguesa" onclick="toggleMenu()">☰</button>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#historia">Nosotros</a></li>
+    <li><a href="#reservas">Reservas</a></li>
+    <li><a href="#ubicacion">Ubicación</a></li>
+    <li><a href="#delivery">Delivery</a></li>
+    <li><a href="#platos">Platos especiales</a></li>
+    <li><a href="#reseñas">Reseñas y opiniones</a></li>
+  </ul>
+</header>s
 
   <!-- --- HERO CON DOBLE FONDO TENUE (CSS PURO) --- -->
   <div class="hero" id="hero-slideshow">
