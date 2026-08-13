@@ -836,3 +836,199 @@ html {
   margin-bottom: 15px;
   border: 1px solid #333;
 }
+/* Estilos para la Sección de Reseñas */
+.seccion-reseñas {
+  padding: 60px 20px;
+  background-color: #141414;
+  color: #ffffff;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.reseñas-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.reseñas-header h2 {
+  color: #ff4d4d;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.reseñas-header p {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+/* Grilla de tarjetas */
+.reseñas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Tarjeta individual estilo Google */
+.tarjeta-reseña {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+}
+
+.tarjeta-reseña:hover {
+  transform: translateY(-5px);
+  border-color: #555;
+}
+
+.reseña-autor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.avatar-inicial {
+  width: 40px;
+  height: 40px;
+  background-color: #1565c0;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.reseña-autor h4 {
+  font-size: 1rem;
+  margin: 0;
+  color: #fff;
+}
+
+.fecha-reseña {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.estrellas {
+  color: #fbbc04; /* Color estrella Google */
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.texto-reseña {
+  font-size: 0.95rem;
+  color: #ddd;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.google-badge {
+  font-size: 0.8rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-top: 1px solid #2a2a2a;
+  padding-top: 10px;
+}
+
+.punto-google {
+  width: 8px;
+  height: 8px;
+  background-color: #4285f4;
+  border-radius: 50%;
+}
+
+/* Botón central para ver más */
+.contenedor-btn-reseñas {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn-ver-todas {
+  display: inline-block;
+  background-color: transparent;
+  color: #ff4d4d;
+  border: 2px solid #ff4d4d;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-ver-todas:hover {
+  background-color: #ff4d4d;
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
+/* Desplazamiento suave al hacer clic en el menú */
+html {
+  scroll-behavior: smooth;
+}
+/* ========================================= */
+/* BARRA DE NAVEGACIÓN DESLIZANTE PARA CELULAR */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  /* Contenedor principal del menú bien pegado arriba o flotante */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #121212;
+    padding: 10px 0;
+    border-bottom: 1px solid #222;
+  }
+
+  /* La lista de enlaces con scroll horizontal */
+  .nav-links, .menu-navegacion {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 5px 15px;
+    margin: 0;
+    list-style: none;
+    scrollbar-width: none; /* Oculta scroll en Firefox */
+  }
+
+  /* Ocultar scroll en Chrome, Safari y Edge */
+  .nav-links::-webkit-scrollbar, .menu-navegacion::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cada botoncito de la barra superior */
+  .nav-links li, .menu-navegacion li {
+    flex: 0 0 auto;
+  }
+
+  .nav-links a, .menu-navegacion a {
+    display: block;
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  /* Efecto cuando presionan una sección */
+  .nav-links a:active, .nav-links a:hover {
+    background-color: #ff4d4d;
+    border-color: #ff4d4d;
+  }
+}
