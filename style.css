@@ -191,7 +191,7 @@ h1, h2, h3, .brand-title {
 .menu-container-sections {
   position: relative;
   z-index: 10;
-  background-color: #1a1a1a; 
+  background-color: #e4e0e0; 
   border-radius: 12px;
   padding: 30px 20px;
   min-height: 250px; /* Evita que la página salte si una sección está vacía */
@@ -217,12 +217,12 @@ h1, h2, h3, .brand-title {
 }
 
 .item-carta {
-  background: #222;
+  background: #dd0808;
   padding: 15px;
   border-radius: 8px;
   border: 1px solid #333;
   margin-bottom: 15px;
-  color: #fff;
+  color: #fffcfc;
 }
 
 /* Animación para que no cambie de golpe */
