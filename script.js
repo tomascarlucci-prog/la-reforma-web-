@@ -34,8 +34,9 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-function mostrarSeccion(idSeccion, botonClickeado) {
-  console.log("Intentando mostrar la sección:", idSeccion); // Esto saldrá en la consola
+
+  function mostrarSeccion(idSeccion, botonClickeado) {
+  console.log("Intentando mostrar la sección:", idSeccion);
 
   // Ocultar todas las secciones
   const secciones = document.querySelectorAll('.seccion-carta');
@@ -54,6 +55,15 @@ function mostrarSeccion(idSeccion, botonClickeado) {
   if (seccionAMostrar) {
     seccionAMostrar.classList.add('activa');
     console.log("¡Sección encontrada y activada con éxito!");
+
+    // NUEVO: Desplazamiento automático hacia la sección
+    setTimeout(() => {
+      seccionAMostrar.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }, 100); 
+
   } else {
     console.error("¡ERROR! No se encontró ninguna sección con el ID:", idSeccion);
   }
@@ -62,6 +72,7 @@ function mostrarSeccion(idSeccion, botonClickeado) {
   if (botonClickeado) {
     botonClickeado.classList.add('active');
   }
+
 }
 // ==========================================
 // 4. FUNCIÓN PARA EL MENÚ HAMBURGUESA MÓVIL
