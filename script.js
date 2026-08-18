@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-  function mostrarSeccion(idSeccion, botonClickeado) {
+function mostrarSeccion(idSeccion, botonClickeado) {
   console.log("Intentando mostrar la sección:", idSeccion);
 
   // Ocultar todas las secciones
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
 }
+
 // ==========================================
 // 4. FUNCIÓN PARA EL MENÚ HAMBURGUESA MÓVIL
 // ==========================================
@@ -82,3 +83,43 @@ function toggleMenu() {
     // Al agregar o quitar esta clase, el CSS se encarga de mostrarlo y animarlo
     navLinks.classList.toggle('active'); 
 }
+
+// ==========================================
+// 5. LÓGICA PARA INSTALAR LA APP (PWA)
+// ==========================================
+let promptInstalacion;
+const seccionInstalar = document.getElementById('instalar-app');
+const btnInstalar = document.getElementById('btn-instalar');
+
+// Esto fuerza a que se vea siempre en cualquier dispositivo (PC o Celu)
+if (seccionInstalar) {
+    seccionInstalar.style.display = 'block';
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  promptInstalacion = e;
+});
+
+if (btnInstalar) {
+  btnInstalar.addEventListener('click', () => {
+    // Si tenemos el prompt de instalación (estamos en celu)
+    if (promptInstalacion) {
+      promptInstalacion.prompt();
+      promptInstalacion.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('App instalada');
+        }
+        promptInstalacion = null;
+      });
+    } else {
+      // Si el prompt no existe (estamos en PC)
+      alert("¡Llevá La Reforma en tu bolsillo! 📱\n\nPara instalar nuestra App, abrí este link desde el navegador de tu celular (Chrome o Safari).");
+    }
+  });
+}
+
+// Ocultar sección si ya se instaló
+window.addEventListener('appinstalled', () => {
+  if (seccionInstalar) seccionInstalar.style.display = 'none';
+});
