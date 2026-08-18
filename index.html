@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Reforma - Restaurante & Tradición en Lomas del Mirador</title>
+  
+  <!-- Enlace al MANIFEST de la PWA (App Móvil) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d32f2f"> <!-- Pone de color rojo la barra superior del celu -->
+  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +36,8 @@
     <li><a href="#delivery" onclick="toggleMenu()">Delivery</a></li>
     <li><a href="#platos" onclick="toggleMenu()">Platos especiales</a></li>
     <li><a href="#reseñas" onclick="toggleMenu()">Reseñas y opiniones</a></li>
+    <!-- Botón NUEVO de la App -->
+    <li><a href="#instalar-app" onclick="toggleMenu()" style="color: #ffcccc; font-weight: bold;">📱 App para móvil</a></li>
   </ul>
 </header>
 
@@ -1128,6 +1135,15 @@
   </div>
 </section>
 
+<!-- SECCIÓN DE INSTALACIÓN DE APP MÓVIL (PWA) -->
+<section id="instalar-app" class="seccion-instalar" style="display: none; background: #dd0e0e; padding: 30px 20px; text-align: center; border-radius: 8px; margin: 40px auto; max-width: 600px; border: 2px dashed #d32f2f;">
+  <h2 style="color: #e7dede; margin-bottom: 15px;">¡Llevá La Reforma en tu celular!</h2>
+  <p style="margin-bottom: 20px; color: #f5f3f3; font-size: 1.1em;">Instalá nuestra carta digital para pedir más rápido, sin gastar espacio de memoria y directo en tu pantalla de inicio.</p>
+  <button id="btn-instalar" style="background-color: #000000; color: white; border: none; padding: 12px 25px; font-size: 18px; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    📥 Instalar Aplicación
+  </button>
+</section>
+
 <!-- UBICACIÓN Y MAPA -->
 <section id="ubicacion" class="seccion-ubicacion">
   <div class="card-section">
@@ -1159,6 +1175,17 @@
   <a href="https://instagram.com/lareforma_lomasdelmirador" class="float-btn instagram" target="_blank" title="Instagram">📷</a>
 </div>
 
-<script src="script.js"></script> <!-- O el nombre exacto que le hayas puesto a tu archivo js -->
+<script src="script.js"></script> 
+
+  <!-- Registro del Service Worker para la APP -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker registrado OK', reg))
+          .catch(err => console.log('Error en Service Worker', err));
+      });
+    }
+  </script>
 </body>
 </html>
