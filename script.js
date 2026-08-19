@@ -85,14 +85,19 @@ function toggleMenu() {
 }
 
 // ==========================================
-// 5. LÓGICA PARA INSTALAR LA APP (PWA)
+// 5. LÓGICA PARA INSTALAR LA APP (PWA - Android y iOS)
 // ==========================================
 let promptInstalacion;
 const seccionInstalar = document.getElementById('instalar-app');
 const btnInstalar = document.getElementById('btn-instalar');
 
-// Esto fuerza a que se vea siempre en cualquier dispositivo (PC o Celu)
-if (seccionInstalar) {
+// Detectar si el usuario está en un iPhone/iPad (iOS)
+const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+// Detectar si ya está instalada la app en el celu
+const estaInstalada = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+// Forzar a que se vea siempre para que todos la conozcan (como querías)
+if (seccionInstalar && !estaInstalada) {
     seccionInstalar.style.display = 'block';
 }
 
@@ -103,7 +108,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 if (btnInstalar) {
   btnInstalar.addEventListener('click', () => {
-    // Si tenemos el prompt de instalación (estamos en celu)
+    // CASO 1: Es Android o compu con soporte directo
     if (promptInstalacion) {
       promptInstalacion.prompt();
       promptInstalacion.userChoice.then((choiceResult) => {
@@ -112,9 +117,14 @@ if (btnInstalar) {
         }
         promptInstalacion = null;
       });
-    } else {
-      // Si el prompt no existe (estamos en PC)
-      alert("¡Llevá La Reforma en tu bolsillo! 📱\n\nPara instalar nuestra App, abrí este link desde el navegador de tu celular (Chrome o Safari).");
+    } 
+    // CASO 2: Es un iPhone / iPad (Safari)
+    else if (esIOS) {
+      alert("📱 Para instalar 'La Reforma' en tu iPhone:\n\n1️⃣ Tocá el botón de 'Compartir' 📤 abajo en Safari.\n2️⃣ Buscá y seleccioná la opción 'Agregar al inicio' ➕.\n¡Y listo!");
+    } 
+    // CASO 3: Es una PC común
+    else {
+      alert("¡Llevá La Reforma en tu bolsillo! 📱\n\nPara instalar nuestra App, abrí este link desde el navegador de tu celular.");
     }
   });
 }
