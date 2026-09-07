@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración - La Reforma</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f4f4f9; }
+        h1, h2 { color: #333; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        form input, form textarea, form select, form button { display: block; width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; }
+        form button { background: #28a745; color: white; border: none; font-weight: bold; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #333; color: white; }
+        .btn { padding: 6px 12px; text-decoration: none; color: white; border-radius: 4px; font-size: 14px; display: inline-block; }
+        .btn-danger { background: #dc3545; }
+        .btn-success { background: #28a745; }
+    </style>
+</head>
+<body>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>🛠️ Panel de Control - La Reforma</h1>
+    <div>
+        <a href="/" target="_blank" class="btn" style="background: #333; margin-right: 10px;">👉 Ver Menú Público</a>
+        <a href="/admin/mesas" class="btn" style="background: #17a2b8; margin-right: 10px;">📊 Ver Control de Mesas y Caja</a>
+        <a href="{{ url_for('logout') }}" class="btn" style="background: #dc3545;">Cerrar Sesión</a>
+    </div>
+</div>
+
+    <div class="card">
+        <h2>Cargar Nuevo Plato</h2>
+        <form action="/admin/agregar" method="POST">
+            <!-- ACÁ LE SAQUÉ EL VALUE DEL ERROR, AHORA ESTÁ LIMPIO -->
+            <input type="text" name="nombre" placeholder="Nombre del plato" required>
+            <textarea name="descripcion" placeholder="Descripción de los ingredientes" required></textarea>
+            <input type="number" step="0.01" name="precio" placeholder="Precio ($)" required>
+            <select name="categoria" required>
+                <option value="Entradas">Entradas</option>
+                <option value="Platos Principales" selected>Platos Principales</option>
+                <option value="Minutas">Minutas</option>
+                <option value="Postres">Postres</option>
+                <option value="Bebidas">Bebidas</option>
+            </select>
+            
+            <!-- Checkbox del Menú del Día -->
+            <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; cursor: pointer; font-weight: bold; color: #dc3545;">
+                <input type="checkbox" name="es_plato_del_dia" value="1" style="width: auto; margin: 0;"> 
+                🌟 Marcar como Menú del Día
+            </label>
+
+            <button type="submit">Guardar Plato</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Gestión de la Carta</h2>
+        <table id="seccion-platos"></table>
+            <thead>
+                <tr>
+                    <th>Plato</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plato in platos %}
+                <tr>
+                    <td>
+                        <strong>{{ plato.nombre }}</strong>
+                        {% if plato.es_plato_del_dia == 1 %}
+                            <span style="color: #dc3545; font-weight: bold;">(🌟 Menú del Día)</span>
+                        {% endif %}
+                        <br><small>{{ plato.descripcion }}</small>
+                    </td>
+                    <td>{{ plato.categoria }}</td>
+                    <td>${{ plato.precio }}</td>
+                    <td>
+                        {% if plato.disponible == 1 %}
+                            <span style="color: green; font-weight: bold;">Activo</span>
+                        {% else %}
+                            <span style="color: red; font-weight: bold;">Pausado</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- Botón para alternar disponibilidad -->
+                        <a href="/admin/toggle-disponible/{{ plato.id }}" class="btn {% if plato.disponible == 1 %}btn-danger{% else %}btn-success{% endif %}">
+                            {% if plato.disponible == 1 %}Pausar{% else %}Activar{% endif %}
+                        </a>
+
+                        <!-- Botón para alternar Menú del Día -->
+                        <a href="/admin/toggle-dia/{{ plato.id }}" class="btn" style="background: #ffc107; color: black; margin-top: 5px;">
+                            {% if plato.es_plato_del_dia == 1 %}Quitar Menú Día{% else %}Hacer Menú Día{% endif %}
+                        </a>
+
+                        <!-- NUEVO: Botón y formulario para Editar -->
+                        <details style="margin-top: 10px;">
+                            <summary class="btn" style="background: #007bff; color: white; cursor: pointer;">✏️ Editar Plato</summary>
+                            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 5px;">
+                                <form action="/admin/editar/{{ plato.id }}" method="POST">
+                                    <input type="text" name="nombre" value="{{ plato.nombre }}" required style="margin-bottom: 5px; padding: 5px; width: 100%;">
+                                    <textarea name="descripcion" required style="margin-bottom: 5px; padding: 5px; width: 100%;">{{ plato.descripcion }}</textarea>
+                                    <input type="number" step="0.01" name="precio" value="{{ plato.precio }}" required style="margin-bottom: 5px; padding: 5px; width: 100%;">
+                                    <select name="categoria" required style="margin-bottom: 10px; padding: 5px; width: 100%;">
+                                        <option value="Entradas" {% if plato.categoria == 'Entradas' %}selected{% endif %}>Entradas</option>
+                                        <option value="Platos Principales" {% if plato.categoria == 'Platos Principales' %}selected{% endif %}>Platos Principales</option>
+                                        <option value="Minutas" {% if plato.categoria == 'Minutas' %}selected{% endif %}>Minutas</option>
+                                        <option value="Postres" {% if plato.categoria == 'Postres' %}selected{% endif %}>Postres</option>
+                                        <option value="Bebidas" {% if plato.categoria == 'Bebidas' %}selected{% endif %}>Bebidas</option>
+                                    </select>
+                                    <button type="submit" style="background: #007bff; padding: 8px; color: white; font-weight: bold; border: none; cursor: pointer; border-radius: 4px;">Guardar Cambios</button>
+                                </form>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> <!-- ACA CERRÉ LA TABLA Y LOS DIVS QUE FALTABAN -->
+    </div>
+
+</body>
+</html>

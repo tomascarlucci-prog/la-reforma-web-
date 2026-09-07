@@ -1,0 +1,487 @@
+:root {
+  --rojo-principal: #d60404;
+  --rojo-oscuro: #800000;
+  --blanco: #ffffff;
+  --crema-fondo: #faf7f2;
+  --texto-oscuro: #2b2b2b;
+  --gris-claro: #f0eceb;
+  --sombra: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--crema-fondo);
+  color: var(--texto-oscuro);
+  line-height: 1.6;
+}
+
+h1, h2, h3, .brand-title {
+  font-family: 'Playfair Display', serif;
+}
+
+/* ========================================= */
+/* HEADER Y NAVEGACIÓN (PC Y ESCRITORIO) */
+/* ========================================= */
+.header-principal {
+  background-color: #ad0808;
+  border-bottom: 3px solid #cc0000;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.logo {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover { opacity: 0.8; }
+
+.menu-hamburguesa {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* ========================================= */
+/* RESPONSIVE: MENÚ MÓVIL (Celulares) */
+/* ========================================= */
+@media (max-width: 768px) {
+  .header-principal {
+    flex-direction: column;
+    padding: 0;
+  }
+  
+  .nav-container {
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px 20px;
+    box-sizing: border-box;
+  }
+
+  .menu-hamburguesa {
+    display: block;
+  }
+
+  .nav-links {
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    width: 100%;
+    background-color: #ff4d4d;
+    padding: 0 0 15px 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .nav-links.active {
+    display: flex; /* Se muestra al hacer click */
+    animation: fadeInMenu 0.3s ease-in-out;
+  }
+
+  @keyframes fadeInMenu {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+    display: block;
+    padding: 10px;
+  }
+}
+
+/* ========================================= */
+/* 1. SECCIÓN MENÚ Y CONTENEDOR              */
+/* ========================================= */
+#menu {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative; /* Fundamental para el z-index */
+  z-index: 5;
+}
+
+/* ========================================= */
+/* 2. BOTONERA DE FILTROS (DESTAPADA)        */
+/* ========================================= */
+.menu-filters {
+  display: flex;
+  flex-wrap: wrap; /* Permite que bajen de renglón y no hagan una barra infinita */
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+  
+  /* ESTO SALVA LOS CLICS: Obliga a la botonera a estar por encima de todo */
+  position: relative;
+  z-index: 999; 
+}
+
+.filter-btn {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 2px solid #444;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  /* ESTO ASEGURA QUE EL MOUSE LOS DETECTE */
+  cursor: pointer; 
+  pointer-events: auto; 
+}
+
+.filter-btn:hover {
+  background-color: #b30000;
+  border-color: #b30000;
+}
+
+.filter-btn.active {
+  background-color: #b30000;
+  color: #ffffff;
+  border-color: #b30000;
+  box-shadow: 0 4px 15px rgba(179, 0, 0, 0.5);
+}
+
+/* ========================================= */
+/* 3. SECCIONES DE LA CARTA (OCULTAR/MOSTRAR)*/
+/* ========================================= */
+.menu-container-sections {
+  position: relative;
+  z-index: 10;
+  background-color: #e4e0e0; 
+  border-radius: 12px;
+  padding: 30px 20px;
+  min-height: 250px; /* Evita que la página salte si una sección está vacía */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.seccion-carta {
+  display: none !important; /* Fuerza a ocultar todas */
+  text-align: left;
+  animation: aparecerSuave 0.4s ease-out;
+}
+
+.seccion-carta.activa {
+  display: block !important; /* Fuerza a mostrar SOLO la clickeada */
+}
+
+.seccion-carta h2 {
+  color: #b30000;
+  font-size: 2rem;
+  border-bottom: 2px solid #b30000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.item-carta {
+  background: #dd0808;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  margin-bottom: 15px;
+  color: #fffcfc;
+}
+
+/* Animación para que no cambie de golpe */
+@keyframes aparecerSuave {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================= */
+/* HERO (SLIDESHOW CSS PURO) */
+/* ========================================= */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  color: var(--blanco);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.bg-1 { z-index: 1; opacity: 1; }
+.bg-2 {
+  z-index: 2; opacity: 0;
+  animation: fundidoSuave 10s infinite ease-in-out;
+}
+
+@keyframes fundidoSuave {
+  0% { opacity: 0; }
+  20%, 50% { opacity: 1; }
+  70%, 100% { opacity: 0; }
+}
+
+.hero-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); z-index: 3;
+}
+
+.hero-content {
+  position: relative; z-index: 4; padding: 0 1.5rem;
+}
+
+.hero h1 {
+  font-size: 3rem; margin-bottom: 0.5rem;
+  font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero p {
+  font-size: 1.2rem; max-width: 600px; margin: 0 auto 1.5rem;
+  font-weight: 300; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.badge {
+  display: inline-block; background-color: var(--blanco);
+  color: var(--rojo-principal); padding: 0.4rem 1rem;
+  border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* ========================================= */
+/* SECCIONES GENERALES */
+/* ========================================= */
+section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.section-title {
+  text-align: center; font-size: 2.4rem; color: var(--rojo-principal); margin-bottom: 0.5rem;
+}
+.section-subtitle {
+  text-align: center; color: #666; margin-bottom: 2.5rem; font-size: 1rem;
+}
+
+/* ========================================= */
+/
+
+/* ========================================= */
+/* SECCIÓN PLATOS ESPECIALES (Grilla y Fotos arregladas) */
+/* ========================================= */
+.seccion-platos {
+  padding: 60px 20px; background-color: #ffffff; text-align: center;
+}
+.seccion-platos h2 { color: #b30000; font-size: 2.2rem; margin-bottom: 10px; }
+
+.platos-grid {
+  display: grid;
+  /* Auto-fit asegura que en celular se ponga en 1 columna, y en PC en 3 */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: 40px auto 0;
+}
+
+.plato-card {
+  background: #fdfdfd; border-radius: 15px; overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.plato-card:hover { transform: translateY(-5px); }
+
+/* Arreglo de la foto para que no quede "muy cerca" o cortada */
+.plato-card img {
+  width: 100%;
+  aspect-ratio: 4/3; /* Mantiene una proporción rectangular perfecta */
+  object-fit: cover;
+  object-position: center; 
+}
+.plato-card h3 { margin: 15px 0 5px; color: #222; font-size: 1.4rem; }
+.plato-card p { padding: 0 20px 20px; color: #666; font-size: 0.95rem; }
+
+/* ========================================= */
+/* DELIVERY Y RESERVAS (Estilos compartidos) */
+/* ========================================= */
+.seccion-delivery-cuadro, .seccion-reservas-cuadro {
+  padding: 60px 20px; background-color: #1a1a1a; color: white;
+}
+.delivery-flex, .reservas-flex {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; max-width: 1100px; margin: 0 auto; flex-wrap: wrap;
+}
+.delivery-info, .reservas-info { flex: 1; min-width: 280px; }
+.delivery-info h2, .reservas-info h3 { color: #ff4d4d; font-size: 2.2rem; margin-bottom: 15px; }
+.delivery-info p, .reservas-info p { color: #cccccc; font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+
+.delivery-datos {
+  background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px;
+  margin-bottom: 25px; border-left: 4px solid #ff4d4d;
+}
+
+.btn-whatsapp, .btn-wsp {
+  display: inline-block; width: 100%; text-align: center;
+  background-color: #25d366; color: white; padding: 12px 25px;
+  border-radius: 8px; text-decoration: none; font-weight: bold; border: none;
+  font-size: 1.1rem; cursor: pointer; transition: background-color 0.2s ease;
+}
+.btn-whatsapp:hover, .btn-wsp:hover { background-color: #20ba5a; }
+
+.delivery-video-box, .reservas-video-box {
+  flex: 1; min-width: 280px; max-width: 400px; margin: 0 auto;
+  border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  background: #000;
+}
+.delivery-video-box video, .reservas-video-box video {
+  width: 100%; max-height: 350px; object-fit: contain; display: block;
+}
+
+/* Formularios */
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; }
+.form-group input, .form-group select {
+  width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 8px; font-family: inherit;
+}
+
+/* ========================================= */
+/* SOBRE NOSOTROS */
+/* ========================================= */
+.about-box {
+  background: var(--blanco); padding: 3rem; border-radius: 15px;
+  box-shadow: var(--sombra); border-left: 6px solid var(--rojo-principal);
+}
+.about-box p { margin-bottom: 1.2rem; font-size: 1.05rem; text-align: justify; }
+.about-highlights {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem; margin-top: 2.5rem;
+}
+.highlight-card {
+  text-align: center; padding: 1.5rem; background: var(--crema-fondo);
+  border-radius: 10px; border: 1px solid #ebe5df;
+}
+.highlight-card h4 { color: var(--rojo-principal); font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+/* Video Suelto */
+.contenedor-video-suelto { margin-top: 40px; text-align: center; padding: 20px; }
+.titulo-video-suelto { color: #b30000; font-size: 1.8rem; margin-bottom: 5px; }
+.subtitulo-video-suelto { color: #666; font-size: 1rem; margin-bottom: 25px; }
+.caja-video-central {
+  max-width: 700px; margin: 0 auto; border-radius: 15px; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); border: 3px solid #f0f0f0; background: #000;
+}
+.caja-video-central video { width: 100%; display: block; }
+
+/* ========================================= */
+/* RESEÑAS */
+/* ========================================= */
+.seccion-reseñas {
+  padding: 60px 20px; background-color: #141414; color: #ffffff; max-width: 100%;
+}
+.reseñas-header { text-align: center; margin-bottom: 40px; }
+.reseñas-header h2 { color: #ff4d4d; font-size: 2.2rem; }
+.reseñas-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto 30px;
+}
+.tarjeta-reseña {
+  background: #1f1f1f; border: 1px solid #333; border-radius: 12px; padding: 20px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.reseña-autor { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.avatar-inicial {
+  width: 40px; height: 40px; color: white; font-weight: bold;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.estrellas { color: #fbbc04; font-size: 1.1rem; margin-bottom: 10px; }
+.texto-reseña { font-size: 0.95rem; color: #ddd; margin-bottom: 15px; }
+.google-badge { font-size: 0.8rem; color: #888; border-top: 1px solid #2a2a2a; padding-top: 10px; }
+.contenedor-btn-reseñas { text-align: center; }
+.btn-ver-todas {
+  display: inline-block; color: #ff4d4d; border: 2px solid #ff4d4d; padding: 12px 25px;
+  border-radius: 30px; font-weight: bold; text-decoration: none; transition: 0.3s;
+}
+.btn-ver-todas:hover { background-color: #ff4d4d; color: white; }
+
+/* ========================================= */
+/* UBICACIÓN */
+/* ========================================= */
+.seccion-ubicacion { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+.card-section { background: var(--blanco); padding: 2.5rem; border-radius: 15px; box-shadow: var(--sombra); }
+.card-section h3 { color: var(--rojo-principal); font-size: 1.8rem; text-align: center; margin-bottom: 1.5rem; }
+.ubicacion-flex { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.map-container, .video-container { flex: 1; min-width: 300px; height: 300px; border-radius: 12px; overflow: hidden; }
+.map-container iframe { width: 100%; height: 100%; border: 0; }
+.video-container video { width: 100%; height: 100%; object-fit: contain; background: #000; }
+.location-info { text-align: center; padding: 10px; }
+
+/* ========================================= */
+/* FOOTER Y BOTONES SOCIALES FLOTANTES */
+/* ========================================= */
+footer { background-color: var(--rojo-principal); color: var(--blanco); text-align: center; padding: 2rem 1rem; margin-top: 2rem; }
+.floating-social { position: fixed; bottom: 25px; right: 25px; z-index: 999; display: flex; flex-direction: column; gap: 15px; }
+.float-btn {
+  width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-decoration: none; transition: transform 0.3s ease; color: white;
+}
+.float-btn:hover { transform: scale(1.1); }
+.float-btn.whatsapp { background-color: #25d366; }
+.float-btn.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+.menu-filters {
+  position: relative;
+  z-index: 20; /* Nos aseguramos de que esté por encima del resto */
+  display: flex;
+  flex-wrap: wrap; /* Para que los botones no se desborden en celulares */
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+h3, .nombre-plato, .card-title {
+    color: #222222 !important;
+}

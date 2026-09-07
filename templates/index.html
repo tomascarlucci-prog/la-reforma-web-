@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Reforma - Restaurante & Tradición en Lomas del Mirador</title>
+  
+  <!-- Enlace al MANIFEST de la PWA (App Móvil) -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="theme-color" content="#d32f2f"> <!-- Pone de color rojo la barra superior del celu -->
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Enlace a tu archivo CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- NAVEGACIÓN -->
+<header class="header-principal">
+  <div class="nav-container">
+    <a href="#" class="logo">LA REFORMA</a>
+    <!-- Botón hamburguesa -->
+    <button class="menu-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
+  </div>
+
+  <!-- Menú de navegación -->
+  <ul class="nav-links">
+    <li><a href="#menu" onclick="toggleMenu()">Menú</a></li>
+    <li><a href="#historia" onclick="toggleMenu()">Nosotros</a></li>
+    <li><a href="#reservas" onclick="toggleMenu()">Reservas</a></li>
+    <li><a href="#ubicacion" onclick="toggleMenu()">Ubicación</a></li>
+    <li><a href="#delivery" onclick="toggleMenu()">Delivery</a></li>
+    <li><a href="#platos" onclick="toggleMenu()">Platos especiales</a></li>
+    <li><a href="#reseñas" onclick="toggleMenu()">Reseñas y opiniones</a></li>
+    <!-- Botón NUEVO de la App -->
+    <li><a href="#instalar-app" onclick="toggleMenu()" style="color: #ffcccc; font-weight: bold;">📱 App para móvil</a></li>
+  </ul>
+</header>
+
+<!-- HERO CON DOBLE FONDO TENUE -->
+<div class="hero" id="hero-slideshow">
+  <div class="hero-bg bg-1" style="background-image: url('{{ url_for('static', filename='pisonuevo.jpg') }}');"></div>
+  <div class="hero-bg bg-2" style="background-image: url('{{ url_for('static', filename='sebaluis.jpg') }}');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="badge">Lomas del Mirador</span>
+    <h1>LA REFORMA</h1>
+    <p>Auténtica tradición familiar, pasión por la cocina y el orgullo de nuestro barrio.</p>
+  </div>
+</div>
+
+<!-- SECCIÓN MENÚ DEL DÍA (AHORA BIEN ABAJO) -->
+<section id="menu-del-dia" style="background-color: #fff3f3; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: center;">
+    <h2 style="color: #d9534f;">🍽️ Menú del Día / Especiales</h2>
+    
+    <div class="lista-menu-dia" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px;">
+        {% for plato in platos_del_dia %}
+            <div class="tarjeta-plato-dia" style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 250px;">
+                <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">{{ plato.nombre }}</h3>
+                <p style="font-size: 14px; color: #555; margin-bottom: 10px;">{{ plato.descripcion }}</p>
+                <span style="font-size: 16px; color: #28a745; font-weight: bold;">${{ plato.precio }}</span>
+            </div>
+        {% else %}
+            <p style="color: #777;">No hay platos del día cargados en este momento. ¡Consultá en administración!</p>
+        {% endfor %}
+    </div>
+</section>
+    
+  
+<!-- SECCIÓN 1: MENÚ DIGITAL -->
+<section id="menu">
+  <h2 class="section-title">Nuestro Menú</h2>
+  <p class="section-subtitle">Especialidades elaboradas con la máxima higiene y dedicación (consultar stock y precio)</p>
+
+  <!-- BOTONES DE NAVEGACIÓN DEL MENÚ -->
+  <div class="menu-filters">
+    <button class="filter-btn active" onclick="mostrarSeccion('cafeteria', this)">Cafetería / Sándwiches</button>
+    <button class="filter-btn" onclick="mostrarSeccion('entradas', this)">Nuestras Entradas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('parrilla', this)">Parrilla (Por Porción)</button>
+    <button class="filter-btn" onclick="mostrarSeccion('pastas', this)">Pastas / Salsas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('minutas', this)">Nuestras Minutas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('ensaladas', this)">Nuestras Ensaladas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('acompanar', this)">Para Acompañar</button>
+    <button class="filter-btn" onclick="mostrarSeccion('pizzas', this)">Pizzas / Empanadas</button>
+    <button class="filter-btn" onclick="mostrarSeccion('postres', this)">Postres / Helados</button>
+    <button class="filter-btn" onclick="mostrarSeccion('sin-alcohol', this)">Bebidas Sin Alcohol</button>
+    <button class="filter-btn" onclick="mostrarSeccion('licuados', this)">Licuados y Jugos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('cervezas', this)">Cervezas / Porrón</button>
+    <button class="filter-btn" onclick="mostrarSeccion('aperitivos', this)">Aperitivos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('vinos-blancos', this)">Vinos Blancos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('espumantes', this)">Espumantes y Rosados</button>
+    <button class="filter-btn" onclick="mostrarSeccion('vinos-tintos', this)">Vinos Tintos</button>
+    <button class="filter-btn" onclick="mostrarSeccion('spirits', this)">Licores y Spirits</button>
+    <button class="filter-btn" onclick="mostrarSeccion('whiskies', this)">Whiskies</button>
+  </div>
+
+  <!-- CONTENEDOR DE LAS SECCIONES DE LA CARTA -->
+  <div class="menu-container-sections">
+
+    <!-- CAFETERÍA & SÁNDWICHES -->
+    <section id="cafeteria" class="seccion-carta activa">
+      <h2>Cafetería & Sándwiches</h2>
+      <div class="item-carta">
+        <h3>Café en Pocillo</h3>
+        <span>3.000$</span>
+        <p>.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Americano</h3>
+        <span>3.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Pocillo o americano con Crema</h3>
+        <span>3.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Café con Leche</h3>
+        <span>3.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Café Doble</h3>
+        <span>4.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>capuccino a la italiana</h3>
+        <span>4.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Submarino</h3>
+        <span>4.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Té / Saborizado</h3>
+        <span>3.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Té con Limón</h3>
+        <span>3.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Té con Leche</h3>
+        <span>3500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Medialuna c/u</h3>
+        <span>1.000$</span>
+        <p>Manteca o grasa doradita y crocante.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Porción de Tostadas con Manteca y Mermelada</h3>
+        <span>3.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Porción de Tostadas con Queso y Mermelada</h3>
+        <span>3.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Café con Leche con 2 Medialunas</h3>
+        <span>Consultar</span>
+        <p>El combo clásico para arrancar el día.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Tostado de Pan Árabe de Jamón y Queso</h3>
+        <span>5.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Tostado de Pan Árabe de Queso y Tomate</h3>
+        <span>5.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Adicional Lechuga / Tomate / Huevo c/u</h3>
+        <span>1.000$</span>
+        <p>Agregá extra a tus preparaciones.</p>
+      </div>
+    </section>
+
+    <!-- ENTRADAS -->
+    <section id="entradas" class="seccion-carta">
+      <h2>Nuestras Entradas</h2>
+      <div class="item-carta">
+        <h3>Matambre con Ensalada Rusa</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Salpicón de Ave</h3>
+        <span>$8.800</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Salpicón de Atún</h3>
+        <span>$10.200</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Vithel Thoné</h3>
+        <span>Consultar</span>
+        <p>Finísimas lonjas de carne salseadas con crema de atún, anchoas y alcaparras.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Lengua a la Vinagreta</h3>
+        <span>Consultar</span>
+        <p>Tierna lengua vacuna marinada en vinagreta de ajo, perejil y morrones.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Jamón Cocido y Queso en Rollitos</h3>
+        <span>$7.800</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Jamón Cocido con Ensalada Rusa</h3>
+        <span>$7.800</span>
+        <p>Acompañado de nuestra ensalada rusa artesanal.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Jamón Crudo y Queso en Rollitos</h3>
+        <span>$9.800</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Jamón Crudo con Ensalada Rusa</h3>
+        <span>$9.800</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Jamón Crudo con Roquefort</h3>
+        <span>$10.200</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Jamón Crudo con Palmitos</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Vizcacha al Escabeche</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+    </section>
+
+    <!-- PARRILLA -->
+    <section id="parrilla" class="seccion-carta">
+      <h2>Nuestra Parrilla (Por Porción)</h2>
+      <div class="item-carta">
+        <h3>Chorizo</h3>
+        <span>6.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Morcilla</h3>
+        <span>6.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Provoleta</h3>
+        <span>12.500$</span>
+        <p>.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Chinchulines</h3>
+        <span>11.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Riñones</h3>
+        <span>12.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Mollejas</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Asado</h3>
+        <span>17.500$</span>
+        <p>Tradicional corte de asado de tira.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Vacío</h3>
+        <span>19.000$</span>
+        <p>Tierno y jugoso vacuno a las brasas.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Bife de Chorizo</h3>
+        <span>19.500$</span>
+        <p>Corte clásico argentino de gran sabor y grosor.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Mini Bife de Chorizo</h3>
+        <span>18.900$</span>
+        <p>Corte clásico en porción ideal.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Churrasquito de Cuadril</h3>
+        <span>16.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Costillitas de Cerdo a la Riojana</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Bife de Costilla</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Pechito de Cerdo</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Bondiola</h3>
+        <span>$14.000$</span>
+        <p>Bondiola tierna y especiada a la parrilla.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Salmón Rosado</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>1/4 de Pollo con Hueso (Pata-Muslo)</h3>
+        <span>$10.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Pechuga Deshuesada</h3>
+        <span>$11.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Pata - Muslo Deshuesado</h3>
+        <span>$11.500$</span>
+        <p></p>
+      </div>
+    </section>
+
+    <!-- PASTAS Y SALSAS -->
+    <section id="pastas" class="seccion-carta">
+      <h2>Nuestras Pastas</h2>
+      <div class="item-carta">
+        <h3>Tallarines</h3>
+        <span>8.100$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Ñoquis de Papa</h3>
+        <span>8.900$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Ravioles de Ricotta</h3>
+        <span>9.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Ravioles de Pollo y Verdura</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentinos de Jamón y Queso</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Canelones de Ricotta y Verdura</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Ñoquis Rellenos de Jamón y Queso</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Ñoquis Rellenos de Espinaca con Queso</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Raviolón Rico (Jamón y Nuez)</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Raviolón de Salmón</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Raviolón de Ricotta</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Raviolón de Pollo y Verdura</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Raviolón de Calabaza</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino de Merluza</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino de Bondiola</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino de Osobuco</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino de Vacío y Provoleta</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino de Brócoli y Roquefort</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino Capresse</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Sorrentino de Jamón y Queso</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Capelettis de Ricotta, Pollo y Verdura</h3>
+        <span>Consultar</span>
+      </div>
+      <div class="item-carta">
+        <h3>Capelettis de Jamón y Queso</h3>
+        <span>Consultar</span>
+      </div>
+
+      <!-- SALSAS -->
+      <h2 style="margin-top: 30px;">Nuestras Salsas</h2>
+      <div class="item-carta">
+        <h3>Tuco</h3>
+        <span>5.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Salsa Blanca</h3>
+        <span>5.600$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Crema de Leche</h3>
+        <span>5.800$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Bolognesa</h3>
+        <span>5.600$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Estofado de Carne</h3>
+        <span>6.000$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Salsa Rosa</h3>
+        <span>5.800$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Salsa Mixta</h3>
+        <span>5.600$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Salsa Parisienne</h3>
+        <span>9.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Salsa Scarparo</h3>
+        <span>9.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Salsa 4 Quesos</h3>
+        <span>9.000$</span>
+      </div>
+    </section>
+
+    <!-- PARA ACOMPAÑAR -->
+    <section id="acompanar" class="seccion-carta">
+      <h2>Para Acompañar</h2>
+      <div class="item-carta">
+        <h3>Ensalada Rusa</h3>
+        <span>6.000$ (Guarnición) / 7000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Papas Fritas</h3>
+        <span>6.000$ (Guarnición) / 7000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Papas Fritas Provenzal</h3>
+        <span>6.500$ (Guarnición) / 7500 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Puré de Papas</h3>
+        <span>6.000$ (Guarnición) / 7000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Puré de Calabaza</h3>
+        <span>4.500$ (Guarnición) / 5500 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Puré Mixto (Calabaza y Papas)</h3>
+        <span>6.000$ (Guarnición) / 7000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Papas al Natural</h3>
+        <span>6.000$ (Guarnición) / 7000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Calabaza al Natural</h3>
+        <span>4.500$ (Guarnición) / 5500 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Acelga Salteada</h3>
+        <span>4.000$ (Guarnición) / 5000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Batatas</h3>
+        <span>5.500$ (Guarnición) / 6500 (Porción)</span>
+        <p>Fritas o al horno, según disponibilidad.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Papas Españolas</h3>
+        <span>6.000$ (Guarnición) / 7000 (Porción)</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Arroz Pilaf</h3>
+        <span>Consultar</span>
+        <p>Arroz blanco al estilo clásico.</p>
+      </div>
+    </section>
+
+    <!-- ENSALADAS -->
+    <section id="ensaladas" class="seccion-carta">
+      <h2>Nuestras Ensaladas</h2>
+      <div class="item-carta">
+        <h3>Ensalada hasta 2 gustos</h3>
+        <span></span>
+        <p>Armala con: tomate, lechuga, zanahoria, cebolla, remolacha, radicheta, rúcula, ajo, huevo duro.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Ensalada Mixta (3 gustos)</h3>
+        <span></span>
+        <p>Elegí hasta 3 ingredientes base.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Adicional por gusto extra</h3>
+        <span></span>
+      </div>
+      <div class="item-carta">
+        <h3>Adicionales Especiales</h3>
+        <p>Pollo, atún, queso, palmitos, morrón, jamón</p>
+      </div>
+    </section>
+
+    <!-- MINUTAS -->
+    <section id="minutas" class="seccion-carta">
+      <h2>Nuestras Minutas</h2>
+      <div class="item-carta">
+        <h3>Milanesa pollo con fritas</h3>
+        <span>17.500$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Milanesa pollo napolitana</h3>
+        <span>19.500$</span>
+        <p>Acompañada de papas fritas o puré.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Suprema pollo con fritas o pure</h3>
+        <span>17.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Suprema con Guarnición</h3>
+        <span>12.000$</span>
+        <p></p>
+
+      </div>
+ <div class="item-carta">
+        <h3>Filet de Merluza</h3>
+        <span>11.000$</span>
+        <p>.</p>
+      </div>
+      
+      <div class="item-carta">
+  <h3>Milanesa de ternera Suiza c/fritas o puré</h3>
+  <span>$19.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Milanesa de ternera c/fritas o puré</h3>
+  <span>$17.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Milanesa ternera Napolitana</h3>
+  <span>$19.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Milanesa ternera Fugazzeta c/fritas o puré</h3>
+  <span>$19.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Tortilla de Acelga</h3>
+  <span>$10.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Tortilla de Papa</h3>
+  <span>$12.000</span>
+</div>
+
+<div class="item-carta">
+  <h3>Tortilla de Papa con Cebolla</h3>
+  <span>$13.000</span>
+</div>
+
+<div class="item-carta">
+  <h3>Omelette de Jamón y Queso</h3>
+  <span>$12.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Omelette de Jamón o Queso</h3>
+  <span>$9.500</span>
+</div>
+
+<div class="item-carta">
+  <h3>Huevos Fritos c/u</h3>
+  <span>$2.000</span>
+</div>
+
+    </section>
+
+    <!-- PIZZAS Y EMPANADAS -->
+    <section id="pizzas" class="seccion-carta">
+      <h2>Nuestras Pizzas / Empanadas</h2>
+      <div class="item-carta">
+        <h3>Pizza Mozzarella</h3>
+        <span>9.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Pizza Jamon y morrones</h3>
+        <span>11.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>pizza de anchoas</h3>
+        <span>22.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Empanada de Jamón y Queso , cebolla y queso , humita, roquefort , capresse , verdura , pollo , carne  (Unidad)</h3>
+        <span>3.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Pizza Napolitana con Jamón</h3>
+        <span>25.000$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Pizza de Cancha</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Fainá (La Porción)</h3>
+        <span>3.000$</span>
+        <p>Tradicional fainá doradita al horno.</p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Pizza de la Casa</h3>
+        <span>28.000$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Fugazza</h3>
+        <span>21.000$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Calabresa</h3>
+        <span>25.000$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Fugazza con Queso</h3>
+        <span>25.000$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Fugazza Rellena</h3>
+        <span>30.000$</span>
+        <p></p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Pizza de Roquefort</h3>
+        <span>25.000$</span>
+        <p>Muzarella con fundido de queso azul.</p>
+      </div>
+
+      <div class="item-carta">
+        <h3>Pizza de Espinacas</h3>
+        <span>25.000$</span>
+        <p></p>
+      </div>s
+    </section>
+
+    <!-- POSTRES Y POSTRES HELADOS -->
+    <section id="postres" class="seccion-carta">
+      <h2>Nuestros Postres / Postres Helados</h2>
+      <div class="item-carta">
+        <h3>Flan Casero</h3>
+        <span>5.700$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Budín de Pan Casero</h3>
+        <span>6.700$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Frutillas</h3>
+        <span>9.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Frutillas con Crema</h3>
+        <span>10.500$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Ensalada de Frutas</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Duraznos en Almíbar</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Vigilante</h3>
+        <span>6.300$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Dulce de Batata o Membrillo</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Adicional de Crema o Dulce</h3>
+        <span>1.000$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Copa Helada (2 gustos)</h3>
+        <span>6.400$</span>
+        <p>A elección: frutilla, crema americana, dulce de leche, chocolate, vainilla o limón.</p>
+      </div>
+      <div class="item-carta">
+        <h3>Almendrado</h3>
+        <span>6.400$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Almendrado al Charlotte</h3>
+        <span>6.900$</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Don Pedro</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Bombón Suizo</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+      <div class="item-carta">
+        <h3>Bombón Escocés</h3>
+        <span>Consultar</span>
+        <p></p>
+      </div>
+    </section>
+
+    <!-- BEBIDAS SIN ALCOHOL -->
+    <section id="sin-alcohol" class="seccion-carta">
+      <h2>Bebidas Sin Alcohol</h2>
+      <div class="item-carta"><h3>Agua</h3><span>3.000$</span></div>
+      <div class="item-carta"><h3>Gaseosa</h3><span>4.500$</span></div>
+      <div class="item-carta"><h3>Aguas Saborizadas</h3><span>4.500$</span></div>
+      <div class="item-carta"><h3>Gaseosas (1 1/4 L)</h3><span>8.500$</span></div>
+      <div class="item-carta"><h3>Gaseosa (1 1/2 L Light)</h3><span>8.500$</span></div>
+      <div class="item-carta"><h3>Agua Saborizada (1 1/2 L)</h3><span>8.500$</span></div>
+    </section>
+
+    <!-- CERVEZAS -->
+    <section id="cervezas" class="seccion-carta">
+      <h2>Cervezas</h2>
+      <h3>Botellas (3/4 L)</h3>
+      <div class="item-carta"><h3>Stella Artois</h3><span>12.000$</span></div>
+      <div class="item-carta"><h3>Quilmes</h3><span>11.000$</span></div>
+      <div class="item-carta"><h3>Heineken</h3><span>12.000$</span></div>
+      <div class="item-carta"><h3>Quilmes Stout</h3><span>11.000$</span></div>
+      <div class="item-carta"><h3>Amstel</h3><span>11.000$</span></div>
+      <div class="item-carta"><h3>Brahma</h3><span>11.000$</span></div>
+      <div class="item-carta"><h3>Corona</h3><span>12.000$</span></div>
+      <div class="item-carta"><h3>Patagonia</h3><span>Consultar</span></div>
+      <div class="item-carta"><h3>Andes</h3><span>11.000$</span></div>
+
+      <h3>Porrones y Latas</h3>
+      <div class="item-carta"><h3>Stella Artois (Porrón)</h3><span>5.500$</span></div>
+      <div class="item-carta"><h3>Quilmes (1/2 L)</h3><span>4.500$</span></div>
+      <div class="item-carta"><h3>Corona (1/2 L)</h3><span>5.500$</span></div>
+      <div class="item-carta"><h3>Brahma (Lata)</h3><span>4.500$</span></div>
+      <div class="item-carta"><h3>Heineken (Porrón)</h3><span>5.500$</span></div>
+    </section>
+
+    <!-- APERITIVOS -->
+    <section id="aperitivos" class="seccion-carta">
+      <h2>Aperitivos</h2>
+      <div class="item-carta"><h3>Fernet</h3><span>4.000$</span></div>
+    </section>
+
+    <!-- VINOS BLANCOS -->
+    <section id="vinos-blancos" class="seccion-carta">
+      <h2>Vinos Blancos</h2>
+      <div class="item-carta"><h3>Vasco Viejo</h3><span>8.300$ (3/4) / 7.300$ (3/8)</span></div>
+      <div class="item-carta"><h3>López</h3><span>9.900$ (3/4) / 8.600$ (3/8)</span></div>
+      <div class="item-carta"><h3>Etchart Privado Torrontés</h3><span>Consultar</span></div>
+      <div class="item-carta"><h3>San Felipe</h3><span>11.300$ (3/4) / 10.000$ (3/8)</span></div>
+      <div class="item-carta"><h3>Norton Cosecha Tardía</h3><span>9.700$</span></div>
+    </section>
+
+    <!-- ESPUMANTES Y ROSADOS -->
+    <section id="espumantes" class="seccion-carta">
+      <h2>Espumantes y Rosados</h2>
+      <div class="item-carta"><h3>Chandon</h3><span>29500</span></div>
+    </section>
+
+    <!-- VINOS TINTOS -->
+    <section id="vinos-tintos" class="seccion-carta">
+      <h2>Vinos Tintos</h2>
+      <div class="item-carta">
+        <h3>Trumpeter Malbec</h3>
+        <span>15.500$ (3/8) / 19.000$ (3/4)</span>
+      </div>
+      <div class="item-carta">
+        <h3>Vasco Viejo</h3>
+        <span>7.300$ (3/8) / 8.300$ (3/4)</span>
+      </div>
+      <div class="item-carta">
+        <h3>López Malbec</h3>
+        <span>8.600$ (3/8) / 9.900$ (3/4)</span>
+      </div>
+      <div class="item-carta">
+        <h3>Benjamín Malbec</h3>
+        <span>10.400$</span>
+      </div>
+      <div class="item-carta">
+        <h3>San Felipe</h3>
+        <span>10.000$ (3/8) / 11.300$ (3/4)</span>
+      </div>
+      <div class="item-carta">
+        <h3>Don Valentín Lacrado</h3>
+        <span>8.700$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Finca La Linda Malbec</h3>
+        <span>15.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Luigi Bosca Malbec</h3>
+        <span>24.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Rutini Cabernet</h3>
+        <span>26.500$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Latitud 33 Malbec</h3>
+        <span>14.000$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Elementos Malbec</h3>
+        <span>10.400$</span>
+      </div>
+      <div class="item-carta">
+        <h3>Alma Mora Malbec</h3>
+        <span>11.500$</span>
+      </div>
+    </section>
+
+    <!-- SECCIONES QUE AÚN NO TIENEN CONTENIDO (Necesarias para que no de error el menú) -->
+    <section id="minutas" class="seccion-carta"><h2>Nuestras Minutas</h2></section>
+    <section id="ensaladas" class="seccion-carta"><h2>Nuestras Ensaladas</h2></section>
+    <section id="pizzas" class="seccion-carta"><h2>Nuestras Pizzas / Empanadas</h2></section>
+    <section id="licuados" class="seccion-carta"><h2>Licuados y Jugos</h2></section>
+    <section id="vinos-tintos" class="seccion-carta"><h2>Vinos Tintos</h2></section>
+    <section id="spirits" class="seccion-carta"><h2>Licores y Spirits</h2></section>
+    <section id="whiskies" class="seccion-carta"><h2>Whiskies</h2></section>
+
+  </div> <!-- Cierra .menu-container-sections -->
+</section> <!-- Cierra #menu -->
+<!-- SECCIÓN DELIVERY -->
+<section id="delivery" class="seccion-delivery-cuadro">
+  <div class="container delivery-flex">
+    <div class="delivery-info">
+      <h2>🛵 Delivery Propio</h2>
+      <p>Pedí nuestras especialidades y te las llevamos a la puerta de tu casa al instante.</p>
+      <div class="delivery-datos">
+        <p><strong>📍 Zonas:</strong> Lomas del Mirador.</p>
+        <p><strong>⏰ Horarios:</strong> lunes a sabados: 12 a 15 hs / 20 a 23:00 hs</p>
+      </div>
+      <a href="https://wa.me/5491154510569?text=Hola!%20Quiero%20pedir%20delivery" target="_blank" class="btn-whatsapp">Pedir por WhatsApp</a>
+    </div>
+    <div class="delivery-video-box">
+      <video controls playsinline preload="auto">
+        <source src="{{ url_for('static', filename='deliveryvideo.mp4') }}" type="video/mp4">
+        Tu navegador no soporta videos.
+      </video>
+    </div>
+  </div>
+</section>
+<!-- SECCIÓN PLATOS ESPECIALES -->
+<section id="platos" class="seccion-platos">
+  <div class="container">
+    <h2>🌟 Platos Especiales</h2>
+    <p>Lo mejor de nuestra cocina, seleccionado por nuestro chef (consultar plato especial del dia).</p>
+    <div class="platos-grid">
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='vacioalhorno.jpg') }}" alt="Vacio al horno con papas">
+        <h3>Vacio al horno con papas</h3>
+        <p>Especialidad de la casa.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='pecetoalamostaza.jpg') }}" alt="Peceto a la mostaza">
+        <h3>Peceto a la mostaza</h3>
+        <p>Sabor inigualable.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='arrozconcalamares.jpg') }}" alt="Arroz con calamares">
+        <h3>Arroz con calamares</h3>
+        <p>Directo del mar a tu mesa.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='carremechadoconbatata.jpg') }}" alt="Carre con batatas">
+        <h3>Carre con batatas</h3>
+        <p>Un clásico imperdible.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='milanesacompleta.jpg') }}" alt="Milanesa Completa">
+        <h3>Milanesa Completa</h3>
+        <p>Abundante y sabrosa.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='calzonnapo.jpg') }}" alt="Calzóne Napolitano">
+        <h3>Calzóne Napolitano</h3>
+        <p>Tradición italiana.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='fugazetarellena.jpg') }}" alt="Fugazzeta rellena">
+        <h3>Fugazzeta rellena</h3>
+        <p>Doble masa, extra queso.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='sorrentinosconrosa.jpg') }}" alt="Sorrentinos con rosa">
+        <h3>Sorrentinos salsa rosa</h3>
+        <p>Pasta casera del día.</p>
+      </div>
+      <div class="plato-card">
+        <img src="{{ url_for('static', filename='colitaconpapas.jpg') }}" alt="Colita con Papas">
+        <h3>Colita con Papas</h3>
+        <p>Tierna y jugosa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 2: SOBRE NOSOTROS -->
+<section id="historia">
+  <h2 class="section-title">Sobre Nosotros</h2>
+  <p class="section-subtitle">25 años haciendo historia en Lomas del Mirador</p>
+  <div class="about-box">
+    <p>En <strong>La Reforma</strong>, cada plato cuenta una historia de raíces, trabajo y amor por la buena mesa. Somos una familia de descendientes italianos que llegó a <strong>Lomas del Mirador hace exactamente 25 años</strong>, con una valija repleta de recetas de nuestros antepasados y el sueño intacto de traer nuestra tradición al barrio que nos abrió las puertas.</p>
+    <p>Desde el primer día nos convertimos en un clásico indiscutido de la zona. Nos especializamos en todo tipo de comida: desde las pastas amasadas a mano hasta las carnes y platos caseros más emblemáticos. Para nosotros, la calidad no se negocia: trabajamos bajo las más estricta rigurosidad e <strong>higiene en cada etapa de preparación</strong>, garantizando alimentos seguros, frescos y con el estándar de una cocina ejemplar.</p>
+    <p>Detrás de cada servicio se encuentra nuestro mayor orgullo: cocineros experimentados y maestros de la cocina con <strong>décadas de trayectoria</strong> en el rubro, quienes defienden día a día el sabor auténtico y el respeto por los ingredientes. Lomas del Mirador es nuestro hogar, y La Reforma es la mesa donde celebramos esa pasión.</p>
+    <div class="about-highlights">
+      <div class="highlight-card"><h4>25 Años</h4><p>De historia y pertenencia en Lomas del Mirador.</p></div>
+      <div class="highlight-card"><h4>Higiene Ejemplar</h4><p>Máximos estándares de seguridad y control alimentario.</p></div>
+      <div class="highlight-card"><h4>Alta Trayectoria</h4><p>Cocineros de escuela con décadas de oficio artesanal.</p></div>
+    </div>
+  </div>
+  
+  <div class="contenedor-video-suelto">
+    <h3 class="titulo-video-suelto">👨‍🍳 Así trabajamos en La Reforma</h3>
+    <p class="subtitulo-video-suelto">Un poquito de nuestra pasión y esfuerzo diario directo para vos.</p>
+    <div class="caja-video-central">
+      <video controls playsinline preload="auto">
+        <source src="{{ url_for('static', filename='salonvideo.mp4') }}" type="video/mp4">
+        Tu navegador no soporta videos.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN DE RESEÑAS -->
+<section id="reseñas" class="seccion-reseñas">
+  <div class="reseñas-header">
+    <h2>Lo que dicen nuestros clientes</h2>
+    <p>Opiniones reales de quienes nos visitan en La Reforma</p>
+  </div>
+  <div class="reseñas-grid">
+    <div class="tarjeta-reseña">
+      <div class="reseña-autor">
+        <div class="avatar-inicial" style="background-color: #d32f2f;">T</div>
+        <div><h4>Tomás Carlucci</h4><span class="fecha-reseña">Local Guide</span></div>
+      </div>
+      <div class="estrellas">★★★★★</div>
+      <p class="texto-reseña">"La mejor pizzería lejos, calidad precio increíble, el mejor pizzero de todos, súper recomendable, todo muy rico !!"</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
+    </div>
+    
+    <div class="tarjeta-reseña">
+      <div class="reseña-autor">
+        <div class="avatar-inicial" style="background-color: #1976d2;">O</div>
+        <div><h4>Oscar Grande</h4><span class="fecha-reseña">Hace 11 meses</span></div>
+      </div>
+      <div class="estrellas">★★★★★</div>
+      <p class="texto-reseña">"Excelente lugar para ir a comer."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
+    </div>
+
+    <div class="tarjeta-reseña">
+      <div class="reseña-autor">
+        <div class="avatar-inicial" style="background-color: #388e3c;">M</div>
+        <div><h4>Marcela Gomez</h4><span class="fecha-reseña">Hace 4 meses</span></div>
+      </div>
+      <div class="estrellas">★★★★★</div>
+      <p class="texto-reseña">"Hermoso lugar, la atención es excelente y la comida casera se nota en cada plato. Súper recomendable el bife y las pastas."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
+    </div>
+
+    <div class="tarjeta-reseña">
+      <div class="reseña-autor">
+        <div class="avatar-inicial" style="background-color: #f57c00;">C</div>
+        <div><h4>Carlos Benítez</h4><span class="fecha-reseña">Hace 6 meses</span></div>
+      </div>
+      <div class="estrellas">★★★★★</div>
+      <p class="texto-reseña">"Un clásico de Lomas del Mirador que nunca falla. Las empanadas y las minutas son de otro planeta. ¡Precios justos!"</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
+    </div>
+
+    <div class="tarjeta-reseña">
+      <div class="reseña-autor">
+        <div class="avatar-inicial" style="background-color: #7b1fa2;">L</div>
+        <div><h4>Lorena S.</h4><span class="fecha-reseña">Hace 1 año</span></div>
+      </div>
+      <div class="estrellas">★★★★★</div>
+      <p class="texto-reseña">"Pedimos delivery y llegó calentito y rapidísimo. Las porciones son abnegadas y riquísimas. Da gusto tenerlos en el barrio."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
+    </div>
+
+    <div class="tarjeta-reseña">
+      <div class="reseña-autor">
+        <div class="avatar-inicial" style="background-color: #c2185b;">F</div>
+        <div><h4>Federico Alonso</h4><span class="fecha-reseña">Hace 8 meses</span></div>
+      </div>
+      <div class="estrellas">★★★★★</div>
+      <p class="texto-reseña">"Impecable la higiene del lugar y la calidad humana. Da gusto sentarse a comer algo rico sintiéndose como en casa."</p>
+      <div class="google-badge"><span class="punto-google"></span> Opinión de Google</div>
+    </div>
+  </div>
+  <div class="contenedor-btn-reseñas">
+    <a href="https://maps.app.goo.gl/NAJVrvZKBmTkPEG37" target="_blank" class="btn-ver-todas">Ver todas las opiniones en Google ➔</a>
+  </div>
+</section>
+
+
+<!-- SECCIÓN RESERVAS -->
+<section id="reservas" class="seccion-reservas-cuadro">
+  <div class="container reservas-flex">
+    <div class="reservas-info">
+     <h3 style="color: #d1100a !important;">Reservá tu Mesa</h3>
+      <p>Completá tus datos y te enviaremos la solicitud de reserva directo al WhatsApp del restaurante.</p>
+      <form id="wspForm" onsubmit="enviarWhatsApp(event)">
+        <div class="form-group"><label for="nombre">Nombre y Apellido</label><input type="text" id="nombre" placeholder="Ej: Juan Pérez" required></div>
+        <div class="form-group">
+          <label for="personas">Cantidad de Personas</label>
+          <select id="personas" required>
+            <option value="2 personas">2 Personas</option>
+            <option value="3 personas">3 Personas</option>
+            <option value="4 personas">4 Personas</option>
+            <option value="5 personas">5 Personas</option>
+            <option value="6 personas o más">6 Personas o más</option>
+          </select>
+        </div>
+        <div class="form-group"><label for="fecha">Fecha</label><input type="date" id="fecha" required></div>
+        <div class="form-group"><label for="hora">Horario estimado</label><input type="text" id="hora" placeholder="Ej: 21:30 hs" required></div>
+        <button type="submit" class="btn-wsp">📲 Reservar por WhatsApp</button>
+      </form>
+    </div>
+    <div class="reservas-video-box">
+      <video controls playsinline preload="auto">
+        <source src="{{ url_for('static', filename='horariodeatencion.mp4') }}" type="video/mp4">
+        Tu navegador no soporta videos.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN DE INSTALACIÓN DE APP MÓVIL (PWA) -->
+<section id="instalar-app" class="seccion-instalar" style="display: none; background: #dd0e0e; padding: 30px 20px; text-align: center; border-radius: 8px; margin: 40px auto; max-width: 600px; border: 2px dashed #d32f2f;">
+  <h2 style="color: #e7dede; margin-bottom: 15px;">¡Llevá La Reforma en tu celular!</h2>
+  <p style="margin-bottom: 20px; color: #f5f3f3; font-size: 1.1em;">Instalá nuestra carta digital para pedir más rápido, sin gastar espacio de memoria y directo en tu pantalla de inicio.</p>
+  <button id="btn-instalar" style="background-color: #000000; color: white; border: none; padding: 12px 25px; font-size: 18px; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    📥 Instalar Aplicación
+  </button>
+</section>
+
+<!-- UBICACIÓN Y MAPA -->
+<section id="ubicacion" class="seccion-ubicacion">
+  <div class="card-section">
+    <h3>Dónde Encontrarnos</h3>
+    <div class="ubicacion-flex">
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps?q=Juan+Manuel+de+Rosas+898,+Lomas+del+Mirador,+Buenos+Aires&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="video-container">
+        <video controls playsinline preload="auto">
+          <source src="{{ url_for('static', filename='ubicacionlareforma.mp4') }}" type="video/mp4">
+          Tu navegador no soporta videos.
+        </video>
+      </div>
+    </div>
+    <div class="location-info">
+      <p><strong>📍 Dirección:</strong> Av. Juan Manuel de Rosas 898, Lomas del Mirador, Buenos Aires</p>
+      <p class="telefono-wsp"><strong>📞 WhatsApp:</strong> 11-5451-0569</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 LA REFORMA - Tradición y Excelente Cocina en Lomas del Mirador.</p>
+</footer>
+
+<div class="floating-social">
+  <a href="https://wa.me/5491154510569" class="float-btn whatsapp" target="_blank" title="WhatsApp">💬</a>
+  <a href="https://instagram.com/lareforma_lomasdelmirador" class="float-btn instagram" target="_blank" title="Instagram">📷</a>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script> 
+
+  <!-- Registro del Service Worker para la APP -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register("{{ url_for('static', filename='sw.js') }}")
+          .then(reg => console.log('Service Worker registrado OK', reg))
+          .catch(err => console.log('Error en Service Worker', err));
+      });
+    }
+  </script>
+</body>
+</html>
