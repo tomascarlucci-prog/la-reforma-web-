@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comanda Mesa {{ mesa.numero }}</title>
+    <style>
+        /* Formato milimétrico para papel térmico de 80mm */
+        @page {
+            size: 80mm auto;
+            margin: 0;
+        }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            width: 72mm;
+            margin: 0 auto;
+            padding: 5px;
+            color: #000;
+            background: #fff;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .bold { font-weight: bold; }
+        .line { border-bottom: 1px dashed #000; margin: 6px 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { font-size: 12px; padding: 2px 0; }
+        
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body onload="window.print()">
+
+    <div class="text-center">
+        <span class="bold" style="font-size: 16px;">LA REFORMA</span><br>
+        <span>Comanda de Consumo Interno</span><br>
+        <span>Mesa N°: {{ mesa.numero }}</span><br>
+        <span>Fecha: <span id="fecha"></span></span>
+    </div>
+
+    <div class="line"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th align="left">Cant. / Detalle</th>
+                <th align="right">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in mesa.items %}
+            <tr>
+                <td colspan="2" class="bold">{{ item.cantidad }}x {{ item.detalle }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-right">${{ item.precio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="line"></div>
+
+    <table class="bold" style="font-size: 15px;">
+        <tr>
+            <td>TOTAL:</td>
+            <td class="text-right">${{ mesa.total }}</td>
+        </tr>
+    </table>
+
+    <div class="line"></div>
+    <div class="text-center" style="margin-top: 8px;">
+        <span>¡Pedido enviado a cocina/barra!</span>
+    </div>
+
+    <!-- Botón por seguridad por si el navegador bloquea la auto-impresión -->
+    <div class="text-center no-print" style="margin-top: 15px;">
+        <button onclick="window.print()" style="padding: 8px 15px; font-size: 13px; cursor: pointer;">Imprimir de nuevo</button>
+    </div>
+
+    <script>
+        const d = new Date();
+        document.getElementById("fecha").innerText = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    </script>
+</body>
+</html>

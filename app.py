@@ -377,6 +377,49 @@ def cerrar_mesa(cuenta_id):
     
     return redirect(url_for('admin_mesas'))
 
+
+# ------------------ SISTEMA DE TICKETS (TÉRMICA SAM4S) ------------------
+
+@app.route('/imprimir-ticket/<int:mesa_id>')
+def imprimir_ticket(mesa_id):
+    # Verificamos que esté logueado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+        
+    conn = get_db_connection()
+    
+    # Traemos la mesa específica desde la base de datos real
+    cuenta = conn.execute('SELECT * FROM cuentas WHERE id = ?', (mesa_id,)).fetchone()
+    
+    # Si por algún error la mesa no existe, volvemos a la pantalla principal
+    if not cuenta:
+        conn.close()
+        return redirect(url_for('admin_mesas'))
+        
+    # Traemos todos los items cargados en esa mesa
+    items_db = conn.execute('SELECT * FROM detalle_cuenta WHERE cuenta_id = ?', (mesa_id,)).fetchall()
+    conn.close()
+    
+    # Preparamos los datos tal cual los espera tu HTML de ticket
+    datos_mesa = {
+        "numero": cuenta['numero_mesa'],
+        "total": cuenta['total'],
+        "items": []
+    }
+    
+    # Llenamos la lista calculando el subtotal por fila (precio unitario x cantidad)
+    for item in items_db:
+        datos_mesa["items"].append({
+            "cantidad": item['cantidad'],
+            "detalle": item['nombre_plato'],
+            "precio": round(item['precio'] * item['cantidad'], 2)
+        })
+        
+    return render_template('ticket.html', mesa=datos_mesa)
+
+# ------------------------------------------------------------------------
+
+
 if __name__ == '__main__':
     # CORRECCIÓN CRÍTICA: Ahora inicializa la BD antes de correr (evita el fallo en sistemas limpios)
     init_db()
