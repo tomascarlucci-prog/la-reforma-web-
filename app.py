@@ -1,13 +1,15 @@
 import os
-import sqlite3
-import mimetypes  
+import mimetypes
 from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Nuevas librerías para conectarnos a PostgreSQL (Supabase)
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-DB_PATH = os.path.join(BASE_DIR, 'database.db')
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
@@ -21,37 +23,48 @@ app.secret_key = 'reforma_secreta_key_2026'
 ARG_TZA = timezone(timedelta(hours=-3))
 
 def get_db_connection():
-    conn = sqlite3.connect(DB_PATH, timeout=10)
-    conn.row_factory = sqlite3.Row
+    # Render va a leer la variable que configuraste en el panel
+    db_url = os.environ.get('DATABASE_URL')
+    
+    if not db_url:
+        raise ValueError("Falta configurar DATABASE_URL en el entorno (Si estás probando en tu PC, configúrala en tu terminal o usa un archivo .env)")
+        
+    # Corrección automática del prefijo para SQLAlchemy/psycopg2
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+        
+    # Nos conectamos a Supabase pidiéndole que devuelva los datos como diccionarios
+    conn = psycopg2.connect(db_url, cursor_factory=RealDictCursor)
     return conn
 
 def init_db():
     conn = get_db_connection()
+    cur = conn.cursor()
     
-    conn.execute('''
+    cur.execute('''
         CREATE TABLE IF NOT EXISTS usuarios (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             usuario TEXT UNIQUE NOT NULL,
             password_hash TEXT NOT NULL,
             rol TEXT DEFAULT 'admin'
         )
     ''')
     
-    conn.execute('''
+    cur.execute('''
         CREATE TABLE IF NOT EXISTS platos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             nombre TEXT NOT NULL,
             categoria TEXT NOT NULL,
             precio REAL NOT NULL,
             descripcion TEXT,
-            es_plato_del_dia BOOLEAN DEFAULT 0,
-            disponible BOOLEAN DEFAULT 1
+            es_plato_del_dia INTEGER DEFAULT 0,
+            disponible INTEGER DEFAULT 1
         )
     ''')
 
-    conn.execute('''
+    cur.execute('''
         CREATE TABLE IF NOT EXISTS cuentas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             numero_mesa TEXT NOT NULL,
             estado TEXT DEFAULT 'abierta',
             total REAL DEFAULT 0.0,
@@ -61,9 +74,9 @@ def init_db():
         )
     ''')
     
-    conn.execute('''
+    cur.execute('''
         CREATE TABLE IF NOT EXISTS detalle_cuenta (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             cuenta_id INTEGER,
             nombre_plato TEXT NOT NULL,
             precio REAL NOT NULL,
@@ -72,20 +85,28 @@ def init_db():
         )
     ''')
     
-    user_check = conn.execute('SELECT * FROM usuarios').fetchone()
+    cur.execute('SELECT * FROM usuarios')
+    user_check = cur.fetchone()
     if not user_check:
         hashed_pw = generate_password_hash('reforma2026')
-        conn.execute('INSERT INTO usuarios (usuario, password_hash, rol) VALUES (?, ?, ?)', ('admin', hashed_pw, 'admin'))
+        cur.execute('INSERT INTO usuarios (usuario, password_hash, rol) VALUES (%s, %s, %s)', ('admin', hashed_pw, 'admin'))
     
     conn.commit()
+    cur.close()
     conn.close()
 
 
 @app.route('/')
 def index():
     conn = get_db_connection()
-    platos_del_dia = conn.execute('SELECT * FROM platos WHERE es_plato_del_dia = 1 AND disponible = 1').fetchall()
-    todos_los_platos = conn.execute('SELECT * FROM platos WHERE disponible = 1').fetchall()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM platos WHERE es_plato_del_dia = 1 AND disponible = 1')
+    platos_del_dia = cur.fetchall()
+    
+    cur.execute('SELECT * FROM platos WHERE disponible = 1')
+    todos_los_platos = cur.fetchall()
+    
+    cur.close()
     conn.close()
     return render_template('index.html', platos_del_dia=platos_del_dia, platos=todos_los_platos)
 
@@ -97,7 +118,10 @@ def login():
         password = request.form['password']
         
         conn = get_db_connection()
-        user = conn.execute('SELECT * FROM usuarios WHERE usuario = ?', (username,)).fetchone()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM usuarios WHERE usuario = %s', (username,))
+        user = cur.fetchone()
+        cur.close()
         conn.close()
         
         if user and check_password_hash(user['password_hash'], password):
@@ -119,9 +143,14 @@ def logout():
 def admin():
     if 'user_id' not in session:
         return redirect(url_for('login'))
+        
     conn = get_db_connection()
-    platos = conn.execute('SELECT * FROM platos').fetchall()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM platos')
+    platos = cur.fetchall()
+    cur.close()
     conn.close()
+    
     return render_template('admin.html', platos=platos)
 
 @app.route('/admin/agregar', methods=['POST'])
@@ -134,7 +163,7 @@ def agregar_plato():
     categoria = request.form.get('categoria', 'Platos Principales')
     es_plato_del_dia = 1 if request.form.get('es_plato_del_dia') == '1' else 0
     
-    # PROTECCIÓN: Si el usuario escribe mal el precio (ej. letras), se guarda como 0.0 para no romper el sistema
+    # PROTECCIÓN: Si el usuario escribe mal el precio, se guarda como 0.0
     try:
         precio_str = request.form['precio'].replace(',', '.')
         precio = float(precio_str)
@@ -142,10 +171,13 @@ def agregar_plato():
         precio = 0.0
     
     conn = get_db_connection()
-    conn.execute('INSERT INTO platos (nombre, descripcion, precio, categoria, disponible, es_plato_del_dia) VALUES (?, ?, ?, ?, 1, ?)',
+    cur = conn.cursor()
+    cur.execute('INSERT INTO platos (nombre, descripcion, precio, categoria, disponible, es_plato_del_dia) VALUES (%s, %s, %s, %s, 1, %s)',
                  (nombre, descripcion, precio, categoria, es_plato_del_dia))
     conn.commit()
+    cur.close()
     conn.close()
+    
     return redirect(url_for('admin') + '#seccion-platos')
 
 @app.route('/admin/toggle-disponible/<int:id>')
@@ -154,11 +186,16 @@ def toggle_disponible(id):
         return redirect(url_for('login'))
         
     conn = get_db_connection()
-    plato = conn.execute('SELECT disponible FROM platos WHERE id = ?', (id,)).fetchone()
+    cur = conn.cursor()
+    cur.execute('SELECT disponible FROM platos WHERE id = %s', (id,))
+    plato = cur.fetchone()
+    
     nuevo_estado = 0 if plato['disponible'] == 1 else 1
-    conn.execute('UPDATE platos SET disponible = ? WHERE id = ?', (nuevo_estado, id))
+    cur.execute('UPDATE platos SET disponible = %s WHERE id = %s', (nuevo_estado, id))
     conn.commit()
+    cur.close()
     conn.close()
+    
     return redirect(url_for('admin') + '#seccion-platos')
 
 @app.route('/admin/toggle-dia/<int:id>')
@@ -167,11 +204,16 @@ def toggle_dia(id):
         return redirect(url_for('login'))
         
     conn = get_db_connection()
-    plato = conn.execute('SELECT es_plato_del_dia FROM platos WHERE id = ?', (id,)).fetchone()
+    cur = conn.cursor()
+    cur.execute('SELECT es_plato_del_dia FROM platos WHERE id = %s', (id,))
+    plato = cur.fetchone()
+    
     nuevo_estado = 0 if plato['es_plato_del_dia'] == 1 else 1
-    conn.execute('UPDATE platos SET es_plato_del_dia = ? WHERE id = ?', (nuevo_estado, id))
+    cur.execute('UPDATE platos SET es_plato_del_dia = %s WHERE id = %s', (nuevo_estado, id))
     conn.commit()
+    cur.close()
     conn.close()
+    
     return redirect(url_for('admin') + '#seccion-platos')
 
 @app.route('/admin/editar/<int:id>', methods=['POST'])
@@ -183,7 +225,6 @@ def editar_plato(id):
     descripcion = request.form['descripcion']
     categoria = request.form.get('categoria', 'Platos Principales')
     
-    # PROTECCIÓN: Evita caídas por errores de tipeo al editar
     try:
         precio_str = request.form['precio'].replace(',', '.')
         precio = float(precio_str)
@@ -191,13 +232,16 @@ def editar_plato(id):
         precio = 0.0
     
     conn = get_db_connection()
-    conn.execute('''
+    cur = conn.cursor()
+    cur.execute('''
         UPDATE platos
-        SET nombre = ?, descripcion = ?, precio = ?, categoria = ?
-        WHERE id = ?
+        SET nombre = %s, descripcion = %s, precio = %s, categoria = %s
+        WHERE id = %s
     ''', (nombre, descripcion, precio, categoria, id))
     conn.commit()
+    cur.close()
     conn.close()
+    
     return redirect(url_for('admin') + '#seccion-platos')
 
 
@@ -209,23 +253,27 @@ def admin_mesas():
         return redirect(url_for('login'))
     
     conn = get_db_connection()
+    cur = conn.cursor()
     
-    mesas_abiertas = conn.execute('SELECT * FROM cuentas WHERE estado = "abierta"').fetchall()
-    platos = conn.execute('SELECT * FROM platos WHERE disponible = 1').fetchall()
+    cur.execute("SELECT * FROM cuentas WHERE estado = 'abierta'")
+    mesas_abiertas = cur.fetchall()
+    
+    cur.execute("SELECT * FROM platos WHERE disponible = 1")
+    platos = cur.fetchall()
     
     hoy_str = datetime.now(ARG_TZA).strftime('%Y-%m-%d')
     fecha_seleccionada = request.args.get('fecha')
-    
     if not fecha_seleccionada:
         fecha_seleccionada = hoy_str
         
-    # CORRECCIÓN: Filtro LIKE para garantizar que la fecha coincida perfecto
-    totales_pagos = conn.execute('''
+    # CORRECCIÓN: CAST(hora_cierre AS TEXT) para que el LIKE funcione perfecto en Postgres
+    cur.execute('''
         SELECT medio_pago, SUM(total) as subtotal
         FROM cuentas
-        WHERE estado = "cerrada" AND hora_cierre LIKE ?
+        WHERE estado = 'cerrada' AND CAST(hora_cierre AS TEXT) LIKE %s
         GROUP BY medio_pago
-    ''', (fecha_seleccionada + '%',)).fetchall()
+    ''', (fecha_seleccionada + '%',))
+    totales_pagos = cur.fetchall()
     
     resumen_caja = {'Efectivo': 0.0, 'Mercado Pago': 0.0, 'Tarjeta': 0.0}
     
@@ -246,18 +294,20 @@ def admin_mesas():
 
     total_general = resumen_caja['Efectivo'] + resumen_caja['Mercado Pago'] + resumen_caja['Tarjeta']
 
-    # CORRECCIÓN: Filtro LIKE para el historial del día
-    historial_dia = conn.execute('''
+    cur.execute('''
         SELECT * FROM cuentas
-        WHERE estado = "cerrada" AND hora_cierre LIKE ?
+        WHERE estado = 'cerrada' AND CAST(hora_cierre AS TEXT) LIKE %s
         ORDER BY hora_cierre DESC
-    ''', (fecha_seleccionada + '%',)).fetchall()
+    ''', (fecha_seleccionada + '%',))
+    historial_dia = cur.fetchall()
 
     detalle_por_mesa = {}
     for mesa in mesas_abiertas:
-        items = conn.execute('SELECT * FROM detalle_cuenta WHERE cuenta_id = ?', (mesa['id'],)).fetchall()
+        cur.execute('SELECT * FROM detalle_cuenta WHERE cuenta_id = %s', (mesa['id'],))
+        items = cur.fetchall()
         detalle_por_mesa[mesa['id']] = items
 
+    cur.close()
     conn.close()
     
     return render_template('mesas.html',
@@ -279,8 +329,10 @@ def abrir_mesa():
     hora_actual = datetime.now(ARG_TZA).strftime('%Y-%m-%d %H:%M:%S')
     
     conn = get_db_connection()
-    conn.execute('INSERT INTO cuentas (numero_mesa, estado, hora_apertura) VALUES (?, "abierta", ?)', (numero_mesa, hora_actual))
+    cur = conn.cursor()
+    cur.execute("INSERT INTO cuentas (numero_mesa, estado, hora_apertura) VALUES (%s, 'abierta', %s)", (numero_mesa, hora_actual))
     conn.commit()
+    cur.close()
     conn.close()
     
     return redirect(url_for('admin_mesas'))
@@ -294,38 +346,39 @@ def agregar_item_mesa(cuenta_id):
     nombre_manual = request.form.get('nombre_manual')
     precio_manual_str = request.form.get('precio_manual')
     
-    # PROTECCIÓN: Evita que manden letras y fuerza mínimo 1 cantidad
     try:
         cantidad = max(1, int(request.form.get('cantidad', 1)))
     except ValueError:
         cantidad = 1
     
     conn = get_db_connection()
+    cur = conn.cursor()
     nombre = None
     precio = 0.0
 
     if plato_id and plato_id.strip() != "":
-        plato = conn.execute('SELECT * FROM platos WHERE id = ?', (plato_id,)).fetchone()
+        cur.execute('SELECT * FROM platos WHERE id = %s', (plato_id,))
+        plato = cur.fetchone()
         if plato:
             nombre = plato['nombre']
             precio = float(plato['precio'])
             
     elif nombre_manual and nombre_manual.strip() != "" and precio_manual_str:
         nombre = nombre_manual.strip()
-        # PROTECCIÓN: Error de tipeo en precio manual
         try:
             precio = float(precio_manual_str.replace(',', '.'))
         except ValueError:
             precio = 0.0
 
     if nombre and precio > 0:
-        conn.execute('INSERT INTO detalle_cuenta (cuenta_id, nombre_plato, precio, cantidad) VALUES (?, ?, ?, ?)',
+        cur.execute('INSERT INTO detalle_cuenta (cuenta_id, nombre_plato, precio, cantidad) VALUES (%s, %s, %s, %s)',
                      (cuenta_id, nombre, precio, cantidad))
         
         subtotal = precio * cantidad
-        conn.execute('UPDATE cuentas SET total = total + ? WHERE id = ?', (subtotal, cuenta_id))
+        cur.execute('UPDATE cuentas SET total = total + %s WHERE id = %s', (subtotal, cuenta_id))
         conn.commit()
         
+    cur.close()
     conn.close()
     return redirect(url_for('admin_mesas'))
 
@@ -335,16 +388,26 @@ def eliminar_item_mesa(item_id):
         return redirect(url_for('login'))
         
     conn = get_db_connection()
-    item = conn.execute('SELECT * FROM detalle_cuenta WHERE id = ?', (item_id,)).fetchone()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM detalle_cuenta WHERE id = %s', (item_id,))
+    item = cur.fetchone()
     
     if item:
         cuenta_id = item['cuenta_id']
         subtotal = round(float(item['precio']) * int(item['cantidad']), 2)
         
-        conn.execute('DELETE FROM detalle_cuenta WHERE id = ?', (item_id,))
-        conn.execute('UPDATE cuentas SET total = MAX(0, ROUND(total - ?, 2)) WHERE id = ?', (subtotal, cuenta_id))
+        cur.execute('DELETE FROM detalle_cuenta WHERE id = %s', (item_id,))
+        
+        # Leemos el total actual y lo recalculamos seguro en Python
+        cur.execute('SELECT total FROM cuentas WHERE id = %s', (cuenta_id,))
+        cuenta = cur.fetchone()
+        if cuenta:
+            nuevo_total = max(0.0, round(float(cuenta['total']) - subtotal, 2))
+            cur.execute('UPDATE cuentas SET total = %s WHERE id = %s', (nuevo_total, cuenta_id))
+            
         conn.commit()
         
+    cur.close()
     conn.close()
     return redirect(url_for('admin_mesas'))
 
@@ -358,21 +421,23 @@ def cerrar_mesa(cuenta_id):
     hora_actual = datetime.now(ARG_TZA).strftime('%Y-%m-%d %H:%M:%S')
     
     conn = get_db_connection()
+    cur = conn.cursor()
     
     if monto_final_str:
-        # PROTECCIÓN: Si editan el total y ponen una letra, no revienta el sistema, solo ignora el cambio erróneo
         try:
             monto_final = float(monto_final_str.replace(',', '.'))
-            conn.execute('UPDATE cuentas SET total = ? WHERE id = ?', (monto_final, cuenta_id))
+            cur.execute('UPDATE cuentas SET total = %s WHERE id = %s', (monto_final, cuenta_id))
         except ValueError:
             pass
     
-    conn.execute('''
+    cur.execute('''
         UPDATE cuentas
-        SET estado = "cerrada", medio_pago = ?, hora_cierre = ?
-        WHERE id = ?
+        SET estado = 'cerrada', medio_pago = %s, hora_cierre = %s
+        WHERE id = %s
     ''', (medio_pago, hora_actual, cuenta_id))
+    
     conn.commit()
+    cur.close()
     conn.close()
     
     return redirect(url_for('admin_mesas'))
@@ -382,32 +447,32 @@ def cerrar_mesa(cuenta_id):
 
 @app.route('/imprimir-ticket/<int:mesa_id>')
 def imprimir_ticket(mesa_id):
-    # Verificamos que esté logueado
     if 'user_id' not in session:
         return redirect(url_for('login'))
         
     conn = get_db_connection()
+    cur = conn.cursor()
     
-    # Traemos la mesa específica desde la base de datos real
-    cuenta = conn.execute('SELECT * FROM cuentas WHERE id = ?', (mesa_id,)).fetchone()
+    cur.execute('SELECT * FROM cuentas WHERE id = %s', (mesa_id,))
+    cuenta = cur.fetchone()
     
-    # Si por algún error la mesa no existe, volvemos a la pantalla principal
     if not cuenta:
+        cur.close()
         conn.close()
         return redirect(url_for('admin_mesas'))
         
-    # Traemos todos los items cargados en esa mesa
-    items_db = conn.execute('SELECT * FROM detalle_cuenta WHERE cuenta_id = ?', (mesa_id,)).fetchall()
+    cur.execute('SELECT * FROM detalle_cuenta WHERE cuenta_id = %s', (mesa_id,))
+    items_db = cur.fetchall()
+    
+    cur.close()
     conn.close()
     
-    # Preparamos los datos tal cual los espera tu HTML de ticket
     datos_mesa = {
         "numero": cuenta['numero_mesa'],
         "total": cuenta['total'],
         "items": []
     }
     
-    # Llenamos la lista calculando el subtotal por fila (precio unitario x cantidad)
     for item in items_db:
         datos_mesa["items"].append({
             "cantidad": item['cantidad'],
@@ -417,10 +482,8 @@ def imprimir_ticket(mesa_id):
         
     return render_template('ticket.html', mesa=datos_mesa)
 
-# ------------------------------------------------------------------------
-
 
 if __name__ == '__main__':
-    # CORRECCIÓN CRÍTICA: Ahora inicializa la BD antes de correr (evita el fallo en sistemas limpios)
+    # Inicializa la BD antes de correr
     init_db()
     app.run(debug=True)
