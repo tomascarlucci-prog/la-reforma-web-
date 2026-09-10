@@ -115,7 +115,7 @@
     {% for mesa in mesas %}
     <div class="mesa-card abierta">
         <h3 style="margin-top: 0;">🍽️ {{ mesa.numero_mesa }}</h3>
-        <p style="margin: 5px 0;"><strong>Hora inicio:</strong> {{ mesa.hora_apertura[11:16] if mesa.hora_apertura else '--:--' }}</p>
+        <p style="margin: 5px 0;"><strong>Hora inicio:</strong> {{ mesa.hora_apertura.strftime('%H:%M') if mesa.hora_apertura.strftime is defined else (mesa.hora_apertura[11:16] if mesa.hora_apertura else '--:--') }}</p>
         <p style="margin: 5px 0;"><strong>Total acumulado:</strong> <span style="color: #d60404; font-size: 20px; font-weight: bold;">${{ "%.2f"|format(mesa.total) }}</span></p>
 
         <h4 style="margin-bottom: 5px;">Consumo:</h4>
@@ -193,8 +193,8 @@
                 {% for hc in historial %}
                 <tr>
                     <td><strong>{{ hc.numero_mesa }}</strong></td>
-                    <td>{{ hc.hora_apertura[11:16] if hc.hora_apertura else '--:--' }}</td>
-                    <td>{{ hc.hora_cierre[11:16] if hc.hora_cierre else '--:--' }}</td>
+                    <td>{{ hc.hora_apertura.strftime('%H:%M') if hc.hora_apertura.strftime is defined else (hc.hora_apertura[11:16] if hc.hora_apertura else '--:--') }}</td>
+                    <td>{{ hc.hora_cierre.strftime('%H:%M') if hc.hora_cierre.strftime is defined else (hc.hora_cierre[11:16] if hc.hora_cierre else '--:--') }}</td>
                     <td>
                         {% if 'mercado' in hc.medio_pago.lower() or 'mp' in hc.medio_pago.lower() %}
                             <span class="badge mp">Mercado Pago</span>
