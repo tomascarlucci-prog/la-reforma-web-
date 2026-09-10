@@ -96,6 +96,16 @@ def init_db():
     conn.close()
 
 
+# ------------------------------------------------------------------
+# Inicialización automática al arrancar el servidor en Render (Gunicorn)
+# ------------------------------------------------------------------
+try:
+    init_db()
+    print("Base de datos e inicialización verificadas con éxito.")
+except Exception as e:
+    print(f"Aviso al inicializar la base de datos: {e}")
+
+
 @app.route('/')
 def index():
     conn = get_db_connection()
