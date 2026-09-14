@@ -147,7 +147,7 @@
 
             <strong style="font-size: 12px; color: #333;">Opción 2: Cargar Plato Libre a Mano</strong>
             <input type="text" name="nombre_manual" placeholder="Nombre (ej: Gaseosa 1.5L)">
-            <input type="text" name="precio_manual" placeholder="Precio ($ ej: 1500 o 1500,50)">
+            <input type="text" name="precio_manual" placeholder="Precio ($ ej: 1500 o 1500.50)">
 
             <div style="display: flex; gap: 5px; margin-top: 5px;">
                 <input type="number" name="cantidad" value="1" min="1" style="width: 80px;" placeholder="Cant">
@@ -205,7 +205,8 @@
                         {% endif %}
                     </td>
                     <td style="font-weight: bold; font-size: 16px;">${{ "%.2f"|format(hc.total) }}</td>
-                    <td style="text-align: right;">
+                    <td style="text-align: right; display: flex; gap: 5px; justify-content: flex-end; align-items: center;">
+                        <a href="/imprimir-ticket/{{ hc.id }}" target="_blank" class="btn-imprimir" style="padding: 5px 10px; margin: 0; font-size: 12px; width: auto; display: inline-block;">🖨️ Ticket</a>
                         <form action="/admin/mesa/eliminar-historial/{{ hc.id }}" method="POST" style="margin: 0; display: inline;" onsubmit="return confirm('¿Seguro querés eliminar esta mesa del historial? Esto restará el monto de tu caja del día.');">
                             <button type="submit" class="btn-danger" style="padding: 5px 10px; width: auto; font-size: 12px;">🗑️ Borrar</button>
                         </form>
@@ -220,7 +221,6 @@
 </div>
 
 <script>
-    // Reloj en tiempo real
     function actualizarReloj() {
         const ahora = new Date();
         const opciones = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
@@ -229,7 +229,6 @@
     actualizarReloj();
     setInterval(actualizarReloj, 1000);
 
-    // Mantenimiento de Scroll (para que la pantalla no salte al cargar o borrar un plato)
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', function() {
