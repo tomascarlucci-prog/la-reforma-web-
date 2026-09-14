@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Comanda Mesa {{ mesa.numero }}</title>
+    <title>Comanda Mesa {{ mesa.numero_mesa }}</title>
     <style>
         /* Formato milimétrico para papel térmico de 80mm */
         @page {
@@ -35,7 +35,7 @@
     <div class="text-center">
         <span class="bold" style="font-size: 16px;">LA REFORMA</span><br>
         <span>Comanda de Consumo Interno</span><br>
-        <span>Mesa N°: {{ mesa.numero }}</span><br>
+        <span>Mesa N°: {{ mesa.numero_mesa }}</span><br>
         <span>Fecha: <span id="fecha"></span></span>
     </div>
 
@@ -49,15 +49,21 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in mesa.items %}
-            <tr>
-                <td colspan="2" class="bold">{{ item.cantidad }}x {{ item.detalle }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="text-right">${{ item.precio }}</td>
-            </tr>
-            {% endfor %}
+            {% if detalle %}
+                {% for item in detalle %}
+                <tr>
+                    <td colspan="2" class="bold">{{ item.cantidad }}x {{ item.nombre_plato }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="text-right">${{ "%.2f"|format(item.precio * item.cantidad) }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2" class="text-center">Sin ítems en la cuenta</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 
@@ -66,7 +72,7 @@
     <table class="bold" style="font-size: 15px;">
         <tr>
             <td>TOTAL:</td>
-            <td class="text-right">${{ mesa.total }}</td>
+            <td class="text-right">${{ "%.2f"|format(mesa.total) if mesa.total is not none else "0.00" }}</td>
         </tr>
     </table>
 
